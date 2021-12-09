@@ -1,3 +1,20 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System.Net;
 
-Console.WriteLine("Hello, World!");
+HttpClient client = new HttpClient();
+
+await Main();
+
+async Task Main()
+{
+    try
+    {
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44244/User");
+        HttpResponseMessage responseMessage = await client.SendAsync(requestMessage);
+        string responseBody = await responseMessage.Content.ReadAsStringAsync();
+        Console.WriteLine(responseBody);
+    }
+    catch (HttpRequestException e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
