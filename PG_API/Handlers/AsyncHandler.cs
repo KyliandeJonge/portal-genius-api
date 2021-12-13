@@ -1,4 +1,4 @@
-﻿namespace PG_API.Controllers;
+﻿namespace PG_API.Handlers;
 
 public class AsyncHandler
 {

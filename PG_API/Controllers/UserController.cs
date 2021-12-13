@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PG_API.Handlers;
 
 namespace PG_API.Controllers;
 
@@ -13,8 +14,10 @@ public class UserController : ControllerBase
     public string Post()
     {
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,
-            "https://portalgenius.maps.arcgis.com/sharing/rest/portals/x/users?f=json&token=np8MwYSSuAkSeuAm7bS2Ad_m3NL-rzJWYtKW7YZQ0q16r12nZxLU-aG3BF1ve54ZbrZp2fJ2_aVhCU_RGXd4bMEIK0zlbp5En4iGVgjAeLkeIobsqKotef7ydUFrdc2tTuplnZ9Nnwiz0s9NN74HvZX_d0XFXVS29a0mjUcN_JM9VjruFW38y0A5PxTqP9FPa8Po-86JuahC60jYgsGWGQ..&searchUserAccess=*&filter=*&num=100");
+            "https://portalgenius.maps.arcgis.com/sharing/rest/portals/x/users?f=json&token=K2n1Br9O90sp6IZm31EjWm4dkcn2AevsFhYyb4VqZ62P9pNIi8I4LuWVz6G48Yr3XIegSenUMRAro7TROBmjoFlyTghB4dz5BOC8OH7DuNTUZq76uTW3A2C98knFMFc_FCagtBFFwfR2Lcbrword6scyX1PbiFtWgMvSsILwHAEterwSs_Sv8NVR0ohfoIk1VCrwcYxpvylqsyi19HaAuA..&searchUserAccess=*&filter=*&num=100");
         HttpResponseMessage responseMessage = _httpClient.Send(requestMessage);
-        return _asyncHandler.Read(responseMessage.Content).Result;
+        string s = _asyncHandler.Read(responseMessage.Content).Result;
+       //todo: inplement JsonHandler();
+        return s;
     }
 }
