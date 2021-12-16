@@ -50,6 +50,7 @@ namespace PortalGenius.WPF
         {
             if (_showAPIoutput == null)
             {
+                // Get the instance of ShowAPIOutput
                 _showAPIoutput = _serviceProvider.GetService<ShowAPIoutput>();
 
                 this.Content = _showAPIoutput;
