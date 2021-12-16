@@ -1,10 +1,5 @@
-﻿using log4net;
-using log4net.Config;
-using log4net.Repository.Hierarchy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging.Log4Net.AspNetCore.Extensions;
-using PG_API.Handlers;
-using PG_API.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using PortalGenius.Core.Services;
 
 namespace PG_API.Controllers;
 
@@ -21,8 +16,8 @@ public class UserController : ControllerBase
 
 
     [HttpPost()]
-    public async Task<IActionResult> Post()
+    public async Task<IActionResult> GetAllUsers()
     {
-        return Ok(await _arcGISService.GetUsers());
+        return Ok(await _arcGISService.GetAllUsers());
     }
 }

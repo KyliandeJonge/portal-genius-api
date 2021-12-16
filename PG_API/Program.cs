@@ -1,5 +1,4 @@
 ﻿using PortalGenius.Core.Services;
-//using PortalGenius.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,6 @@ builder.Services.AddHttpClient("arcgis-api", options =>
     options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
 });
 builder.Services.AddHttpService("arcgis-api");
-
 
 builder.Services.AddTransient<ArcGISService>();
 
