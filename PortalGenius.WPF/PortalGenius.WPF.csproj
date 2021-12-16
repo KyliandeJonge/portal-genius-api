@@ -40,6 +40,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PG_API\PG_API.csproj" />
+	  <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
 	</ItemGroup>
 </Project>
