@@ -1,6 +1,6 @@
 ﻿using log4net;
 using Newtonsoft.Json;
-using PortalGenius.Core.Services;
+using PortalGenius.Core.Models;
 
 namespace PG_API.Services
 {
@@ -8,22 +8,29 @@ namespace PG_API.Services
     {
         private readonly HttpClient _httpClient;
 
-        private readonly ILog _logger = LogManager.GetLogger(typeof(ArcGISService));
+        private readonly ILogger<ArcGISService> _logger;
 
-        public ArcGISService(IHttpClientFactory httpClientFactory)
+        public ArcGISService(
+            IHttpClientFactory httpClientFactory,
+            ILogger<ArcGISService> logger
+        )
         {
+            _logger = logger;
             _httpClient = httpClientFactory.CreateClient("arcgis-api");
         }
 
-        public async Task<List<object>> GetItems()
+        public async Task<object> GetItems()
         {
-            return await GetRequest<List<object>>("items");
+            _logger.LogInformation("Dit is met Log4J??");
+
+            // TODO: Make accountId dynamic
+            return await GetRequest<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
         }
 
         public async Task<T> GetRequest<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
-            T? result = default;
+            T result = default;
 
             var apiUrl = $"{_httpClient.BaseAddress}/{path}";
 
@@ -35,7 +42,7 @@ namespace PG_API.Services
             }
             catch (HttpRequestException ex)
             {
-                _logger.Error(ex.Message, ex);
+                _logger.LogError(ex.Message, ex);
             }
 
             return result;
