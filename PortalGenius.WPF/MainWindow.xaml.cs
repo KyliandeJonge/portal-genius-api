@@ -12,6 +12,7 @@ namespace PortalGenius.WPF
     public partial class MainWindow : Window
     {
         private readonly IHost _host;
+        private ShowAPIoutput showAPIoutput;
 
         public MainWindow()
         {
@@ -36,6 +37,19 @@ namespace PortalGenius.WPF
             _host.Dispose();
 
             base.OnClosing(e);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (showAPIoutput == null)
+            {
+                showAPIoutput = new ShowAPIoutput();
+                showAPIoutput.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                showAPIoutput.Visibility=Visibility.Visible;
+            }
         }
     }
 }
