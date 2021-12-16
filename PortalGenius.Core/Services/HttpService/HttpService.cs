@@ -1,30 +1,23 @@
-﻿using log4net;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using PortalGenius.Core.Models;
 
-namespace PG_API.Services
+namespace PortalGenius.Core.Services
 {
-    public class ArcGISService
+    public class HttpService
     {
         private readonly HttpClient _httpClient;
 
-        private readonly ILogger<ArcGISService> _logger;
+        private readonly ILogger<HttpService> _logger;
 
-        public ArcGISService(
+        public HttpService(
             IHttpClientFactory httpClientFactory,
-            ILogger<ArcGISService> logger
+            IOptions<HttpServiceOptions> httpServiceOptions,
+            ILogger<HttpService> logger
         )
         {
+            _httpClient = httpClientFactory.CreateClient(httpServiceOptions.Value.HttpClientName);
             _logger = logger;
-            _httpClient = httpClientFactory.CreateClient("arcgis-api");
-        }
-
-        public async Task<object> GetItems()
-        {
-            _logger.LogInformation("Dit is met Log4J??");
-
-            // TODO: Make accountId dynamic
-            return await GetRequest<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
         }
 
         public async Task<T> GetRequest<T>(string path)
@@ -39,10 +32,13 @@ namespace PG_API.Services
                 var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseContentRead);
                 if (response.IsSuccessStatusCode)
                     result = await ParseHttpResponseToJsonAsync<T>(response);
+                else
+                    _logger.LogWarning($"[HTTP {response.StatusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode);
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError($"[HTTP 500] Error while connecting with: ({apiUrl}).");
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -65,4 +61,3 @@ namespace PG_API.Services
         }
     }
 }
-

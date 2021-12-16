@@ -1,4 +1,4 @@
-﻿using PG_API.Services;
+﻿using PortalGenius.Core.Services;
 //using PortalGenius.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,16 +14,15 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddTransient<HttpService>();
-builder.Services.AddTransient<ArcGISService>();
-
-//builder.Services.AddNewtonsoft()
-
 // Configure the HTTP client endpoints
 builder.Services.AddHttpClient("arcgis-api", options =>
 {
     options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
 });
+builder.Services.AddHttpService("arcgis-api");
+
+
+builder.Services.AddTransient<ArcGISService>();
 
 var app = builder.Build();
 

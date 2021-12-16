@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
-using PG_API.Services;
+using PortalGenius.Core.Services;
 
 namespace PG_API.Controllers;
 
