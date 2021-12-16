@@ -27,6 +27,11 @@ namespace PG_API.Services
             return await GetRequest<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
         }
 
+        public async Task<object> GetUsers()
+        {
+            return await GetRequest<object>("portals/x/users?f=json&token=6Jv9FkkWq7T78yD4Egh_2ZIDhv39DWlMBN_ps49ibz0EBihF8pJ7hgrO6Ru_yjGRXWoT9IKAKGEwikddYyBlTfLXo-zYk0eW1EVqdgR7MI2LGtLoRg8YNoNaHp01kCRoVfbAmh6Xm_6IJQcz2le647fvR9FXwtb7EQ-SRwAz2Zbf6xwPohkF6lBjhcoEoPdTHw-6X5iwKADpJEKOtb2fwQ..&searchUserAccess=*&filter=*&num=100");
+        }
+
         public async Task<T> GetRequest<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
