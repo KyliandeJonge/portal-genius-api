@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -12,12 +14,12 @@ namespace PortalGenius.WPF
     public partial class MainWindow : Window
     {
         private readonly IHost _host;
-        private ShowAPIoutput showAPIoutput;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MainWindow()
+        private ShowAPIoutput _showAPIoutput;
+
+        public MainWindow(IServiceProvider serviceProvider)
         {
-            InitializeComponent();
-
             _host = Host.CreateDefaultBuilder()
                 .ConfigureWebHostDefaults(webHost =>
                 {
@@ -29,6 +31,11 @@ namespace PortalGenius.WPF
                 .Build();
 
             _host.Start();
+
+            _serviceProvider = serviceProvider;
+
+            // Finish loading component
+            InitializeComponent();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -41,15 +48,16 @@ namespace PortalGenius.WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (showAPIoutput == null)
+            if (_showAPIoutput == null)
             {
-                showAPIoutput = new ShowAPIoutput();
-                this.Content = showAPIoutput;
-                showAPIoutput.Visibility = Visibility.Visible;
+                _showAPIoutput = _serviceProvider.GetService<ShowAPIoutput>();
+
+                this.Content = _showAPIoutput;
+                _showAPIoutput.Visibility = Visibility.Visible;
             }
             else
             {
-                showAPIoutput.Visibility=Visibility.Visible;
+                _showAPIoutput.Visibility = Visibility.Visible;
             }
         }
     }
