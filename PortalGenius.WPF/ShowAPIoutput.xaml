@@ -9,7 +9,11 @@
       Title="ShowAPIoutput">
 
     <Grid>
-        
-        
+        <Grid.Background>
+            <SolidColorBrush Color="White" Opacity="0.25"/>
+        </Grid.Background>
+        <Button Content="Data Ophalen" Height="30" Width=" 100" Click="Button_Click" Hyperlink.Click="Button_Click"/>
+        <TextBlock Name="Output" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Margin="34,289,0,0" Height="100" Width="706" />
+        <!--<Rectangle HorizontalAlignment="Center" Height="100" Margin="0,283,0,0" Stroke="Black" VerticalAlignment="Top" Width="228"/>-->
     </Grid>
 </Page>

@@ -44,6 +44,7 @@ namespace PortalGenius.WPF
             if (showAPIoutput == null)
             {
                 showAPIoutput = new ShowAPIoutput();
+                this.Content = showAPIoutput;
                 showAPIoutput.Visibility = Visibility.Visible;
             }
             else

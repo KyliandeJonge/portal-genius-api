@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PG_API.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,15 @@ namespace PortalGenius.WPF
     /// </summary>
     public partial class ShowAPIoutput : Page
     {
-        
         public ShowAPIoutput()
         {
-            Visibility = Visibility.Visible;
             InitializeComponent();
-            
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UserController U1 = new UserController();
+            ItemController itemcontroller = new ItemController();
+            Output.Text = itemcontroller.Post();
         }
     }
 }

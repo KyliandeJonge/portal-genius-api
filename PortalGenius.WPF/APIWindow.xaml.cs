@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PG_API.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,12 @@ namespace PortalGenius.WPF
         public APIWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UserController U1 = new UserController();
+            U1.Post();
         }
     }
 }
