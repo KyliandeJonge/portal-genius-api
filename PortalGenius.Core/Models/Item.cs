@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PortalGenius.Core.Models
+﻿namespace PortalGenius.Core.Models
 {
     public class Item
     {

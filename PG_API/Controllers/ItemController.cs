@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
 using PortalGenius.Core.Services;
 
 namespace PG_API.Controllers;
@@ -12,7 +11,7 @@ public class ItemController : ControllerBase
 
     public ItemController(ArcGISService arcGISService)
     {
-        _argGISService = arcGISService; 
+        _argGISService = arcGISService;
     }
 
     [HttpGet]
