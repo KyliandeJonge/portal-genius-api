@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PG_API\PG_API.csproj" />
+      <ProjectReference Include="..\PortalGenius.Api\PortalGenius.Api.csproj" />
     </ItemGroup>
 
 </Project>
