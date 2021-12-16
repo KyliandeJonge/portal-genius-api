@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PortalGenius.Core.Services;
 using System;
 using System.Windows;
@@ -10,7 +12,7 @@ namespace PortalGenius.WPF
     /// </summary>
     public partial class App : Application
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public App()
         {
@@ -20,29 +22,30 @@ namespace PortalGenius.WPF
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        private void ConfigureServices(ServiceCollection services)
+        private void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient("local-api", options =>
             {
                 options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
             });
 
+            services.AddHttpService("local-api");
             services.AddTransient<ArcGISService>();
-            services.AddHttpClient("local-api");
+
+            // Windows
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<APIWindow>();
 
             // Pages
             services.AddTransient<ShowAPIoutput>();
-
-            // Windows
-            services.AddTransient<MainWindow>();
-            services.AddTransient<APIWindow>();
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-
             mainWindow.Show();
+
+            base.OnStartup(e);
         }
     }
 }

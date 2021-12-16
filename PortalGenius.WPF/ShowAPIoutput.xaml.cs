@@ -1,5 +1,4 @@
 ﻿using PortalGenius.Core.Services;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,9 +13,9 @@ namespace PortalGenius.WPF
 
         public ShowAPIoutput(ArcGISService arcGISService)
         {
-            InitializeComponent();
-
             _arcGISService = arcGISService;
+
+            InitializeComponent();
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
