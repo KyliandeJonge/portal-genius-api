@@ -22,8 +22,8 @@ namespace PortalGenius.Core.Services
         /// <exception cref="ArgumentNullException"></exception>
         public static IServiceCollection AddHttpService(this IServiceCollection services, string clientName)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
-            if (clientName == null) throw new ArgumentNullException(nameof(clientName));
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (clientName is null) throw new ArgumentNullException(nameof(clientName));
 
             // Configure the custom HttpService class by storing the client name.
             // This name can be retreived using the IOptions interface inside the HttpService.
