@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalGenius.WPF.Data;
 using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace PortalGenius.WPF
