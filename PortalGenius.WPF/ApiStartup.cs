@@ -38,7 +38,7 @@ namespace PortalGenius.WPF
                         break;
                     case "Oracle":
                         break;
-                    default: throw new ArgumentException("database_in_use missing from appsettings.json");
+                    default: throw new ArgumentException("DatabaseInUse missing from appsettings.json");
                 }
             });
         }
