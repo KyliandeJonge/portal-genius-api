@@ -1,19 +1,39 @@
-##################
-# SQLite         #
-##################
+#######################
+# SQLite              #
+#######################
 
 Aanmaken migratie:
-    Add-Migration <name> -Context SQLiteDbContext -O Data\Contexts\SQLite
+    Add-Migration <name> -Context SQLiteDbContext -O Data\Migrations\SQLite
+
+Migratie uitvoeren op database:
+    Update-Database -Context SQLiteDbContext
 
 Verwijderen laatste migratie:
     Remove-Migration -Context SQLiteDbContext
 
-##################
-# MSSQL          #
-##################
+#######################
+# MSSQL               #
+#######################
 
 Aanmaken migratie:
-    Add-Migration <name> -Context SQlServerDbContext -O Data\Contexts\SQLServer
+    Add-Migration <name> -Context SQlServerDbContext -O Data\Migrations\SQLServer
+
+Migratie uitvoeren op database:
+    Update-Database -Context SQlServerDbContext
 
 Verwijderen laatste migratie:
     Remove-Migration -Context SQlServerDbContext
+
+    
+#######################
+# PostgreSQL (Npgsql) #
+#######################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context PostgreSQLDbContext -O Data\Migrations\PostgreSQL
+
+Migratie uitvoeren op database:
+    Update-Database -Context PostgreSQLDbContext
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context PostgreSQLDbContext

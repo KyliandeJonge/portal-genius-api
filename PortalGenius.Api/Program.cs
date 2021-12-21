@@ -14,12 +14,13 @@ var configuration = builder.Configuration;
 switch (configuration.GetValue<string>("DatabaseInUse"))
 {
     case "Sqlite":
-        builder.Services.AddDbContext<AppDbContext, SQLiteDbContext>();
+        builder.Services.AddDbContext<AppDbContext, PostgreSQLDbContext>();
         break;
     case "MSSQL":
         builder.Services.AddDbContext<AppDbContext, SQLServerDbContext>();
         break;
     case "PostgreSQL":
+        builder.Services.AddDbContext<AppDbContext, PostgreSQLDbContext>();
         break;
     case "Oracle":
         break;
