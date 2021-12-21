@@ -1,0 +1,19 @@
+##################
+# SQLite         #
+##################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context SQLiteDbContext -O Data\Contexts\SQLite
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context SQLiteDbContext
+
+##################
+# MSSQL          #
+##################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context SQlServerDbContext -O Data\Contexts\SQLServer
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context SQlServerDbContext
