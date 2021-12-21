@@ -22,10 +22,10 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
-        public async Task<T> GetAsync<T>(string path)
+        public async Task<string> GetAsync<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
-            T result = default;
+            string result = default;
 
             var apiUrl = $"{_httpClient.BaseAddress}/{path}";
 
@@ -33,7 +33,7 @@ namespace PortalGenius.Core.Services
             {
                 var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseContentRead);
                 if (response.IsSuccessStatusCode)
-                    result = await ParseHttpResponseToJsonAsync<T>(response);
+                    result = await response.Content.ReadAsStringAsync();
                 else
                     _logger.LogWarning($"[HTTP GET {response.StatusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode);
             }
