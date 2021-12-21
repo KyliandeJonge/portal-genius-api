@@ -14,7 +14,7 @@ public class ItemController : ControllerBase
         _argGISService = arcGISService;
     }
 
-    [HttpGet]
+    [HttpGet("/")]
     public async Task<IActionResult> GetAllItems()
     {
         return Ok(await _argGISService.GetAllItems());
