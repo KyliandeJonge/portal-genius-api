@@ -5,7 +5,7 @@ namespace PortalGenius.Infrastructure.Data
 {
     public class SQLiteDbContextFactory : AppDbContextFactory<SQLiteDbContext>
     {
-        public override DbContextOptionsBuilder<SQLiteDbContext> UseDatabaseService(DbContextOptionsBuilder<SQLiteDbContext> builder, IConfigurationRoot configuration)
+        public override DbContextOptionsBuilder<SQLiteDbContext> ConfigureDbContext(DbContextOptionsBuilder<SQLiteDbContext> builder, IConfigurationRoot configuration)
         {
             return builder.UseSqlite(configuration.GetConnectionString("Sqlite"));
         }
