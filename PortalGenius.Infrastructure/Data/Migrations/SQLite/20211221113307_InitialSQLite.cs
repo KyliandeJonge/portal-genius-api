@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PortalGenius.WPF.Migrations
+namespace PortalGenius.Infrastructure.Data.Migrations.SQLite
 {
-    public partial class Init : Migration
+    public partial class InitialSQLite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

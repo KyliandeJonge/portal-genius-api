@@ -1,4 +1,5 @@
 ﻿using PortalGenius.Core.Services;
+using PortalGenius.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,23 @@ builder.Logging.AddProvider(new Log4NetProvider());
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson();
+
+var configuration = builder.Configuration;
+switch (configuration.GetValue<string>("DatabaseInUse"))
+{
+    case "Sqlite":
+        builder.Services.AddDbContext<AppDbContext, SQLiteDbContext>();
+        break;
+    case "MSSQL":
+        builder.Services.AddDbContext<AppDbContext, SQLServerDbContext>();
+        break;
+    case "PostgreSQL":
+        break;
+    case "Oracle":
+        break;
+    default:
+        throw new ArgumentException("DatabaseInUse missing from appsettings.json");
+}
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
