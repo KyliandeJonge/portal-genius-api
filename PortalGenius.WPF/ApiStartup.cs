@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalGenius.WPF.Data;
+using System;
 
 namespace PortalGenius.WPF
 {
@@ -20,10 +21,22 @@ namespace PortalGenius.WPF
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
+                switch (Configuration.GetSection("DatabaseInUse").Value)
+                {
+                    case "Sqlite":
+                        options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
+                        break;
+                    case "MSSQL":
+                        break;
+                    case "PostgreSQL":
+                        break;
+                    case "Oracle":
+                        break;
+                    default: throw new ArgumentException("DatabaseInUse missing from appsettings.json");
+                }
             });
         }
 

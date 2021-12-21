@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "PG_API": {
+    "PortalGenius.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
