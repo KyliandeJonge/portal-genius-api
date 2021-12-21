@@ -19,4 +19,11 @@ public class ItemController : ControllerBase
     {
         return Ok(await _argGISService.GetAllItems());
     }
+
+    [HttpGet]
+    [Route("{item_id}/data")]
+    public async Task<IActionResult> GetDataFromItem(string item_id)
+    {
+        return Ok(await _argGISService.GetDataFromItem(item_id));
+    }
 }
