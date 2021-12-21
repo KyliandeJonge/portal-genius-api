@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalGenius.WPF.Data;
 using System;
-using System.IO;
 
 namespace PortalGenius.WPF
 {
@@ -22,12 +21,10 @@ namespace PortalGenius.WPF
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-
+            
             services.AddDbContext<AppDbContext>(options =>
             {
-                switch (configuration.GetSection("DatabaseInUse").Value)
+                switch (Configuration.GetSection("DatabaseInUse").Value)
                 {
                     case "Sqlite":
                         options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
