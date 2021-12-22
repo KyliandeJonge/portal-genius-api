@@ -1,4 +1,5 @@
 ﻿using PortalGenius.Core.Services;
+using JSONTreeView;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,8 +23,7 @@ namespace PortalGenius.WPF
             //UserController U1 = new UserController();
             //ItemController itemcontroller = new ItemController();
             //Output.Text = itemcontroller.Post();
-
-            Output.Text = (await _arcGISService.GetAllItems()).ToString();
+            Data.ProcessJson((await _arcGISService.GetAllItems()).ToString());
         }
     }
 }
