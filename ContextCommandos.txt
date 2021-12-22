@@ -1,0 +1,71 @@
+---------------------------
+Commando's per DbContext
+---------------------------
+
+Hieronder vind je per DbContext / Databasesoort de nodige commando's om migraties aan te maken, uit te voeren en/of te verwijderen.
+Zorg dat je deze volledig uitvoert (dus alle flags meenemen). Je kunt "<name>" vervangen met een passende naam van de migratie.
+
+LET OP! Bij het uitvoeren van de migratie is het belangrijk dat je het juiste project en de juiste database in de appsettings gekozen hebt.
+Je kunt het juiste project kiezen naast de Playknop van Visual Studio. In DATZELFDE project moet je de waarde van "DatabaseInUse" plaatsen. Deze zijn hieronder per database benoemd.
+
+De migraties worden hiermee automatisch in de juiste map geplaatst (PortalGenius.Infrastructure/Data/Migrations/<context>)
+
+
+##############################################
+# SQLite                                     #
+# Waarde in appsettings: Sqlite              #
+##############################################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context SQLiteDbContext -O Data\Migrations\SQLite
+
+Migratie uitvoeren op database:
+    Update-Database -Context SQLiteDbContext
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context SQLiteDbContext
+
+
+##############################################
+# MSSQL                                      #
+# Waarde in appsettings: MSSQL               #
+##############################################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context SQlServerDbContext -O Data\Migrations\SQLServer
+
+Migratie uitvoeren op database:
+    Update-Database -Context SQlServerDbContext
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context SQlServerDbContext
+
+    
+##############################################
+# PostgreSQL                                 #
+# Waarde in appsettings: PostgreSQL          #
+##############################################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context PostgreSQLDbContext -O Data\Migrations\PostgreSQL
+
+Migratie uitvoeren op database:
+    Update-Database -Context PostgreSQLDbContext
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context PostgreSQLDbContext
+
+
+##############################################
+# Oracle                                     #
+# Waarde in appsettings: Oracle              #
+##############################################
+
+Aanmaken migratie:
+    Add-Migration <name> -Context OracleDbContext -O Data\Migrations\Oracle
+
+Migratie uitvoeren op database:
+    Update-Database -Context OracleDbContext
+
+Verwijderen laatste migratie:
+    Remove-Migration -Context OracleDbContext

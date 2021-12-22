@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PortalGenius.WPF.Data;
-using System;
+using PortalGenius.Infrastructure.Data;
 
 namespace PortalGenius.WPF
 {
@@ -21,23 +19,9 @@ namespace PortalGenius.WPF
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                switch (Configuration.GetSection("DatabaseInUse").Value)
-                {
-                    case "Sqlite":
-                        options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
-                        break;
-                    case "MSSQL":
-                        break;
-                    case "PostgreSQL":
-                        break;
-                    case "Oracle":
-                        break;
-                    default: throw new ArgumentException("DatabaseInUse missing from appsettings.json");
-                }
-            });
+
+            // TODO: Check if local database should be used
+            services.AddDbContext<AppDbContext, SQLiteDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
