@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System.ComponentModel;
@@ -48,11 +49,8 @@ namespace PortalGenius.WPF
         private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
             var items = await _arcGISService.GetAllItems();
-            //JObject joItems = JObject.Parse(items.ToString());
-            //this.ArcgisItems = JsonConvert.DeserializeObject<List<Item>>((string)joItems["results"].ToString());
-
-            _appDbContext.AddRange(items);
-            _appDbContext.SaveChanges();
+            _appDbContext.AddRange(items.Results);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
