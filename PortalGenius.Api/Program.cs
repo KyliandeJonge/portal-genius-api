@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 // Configure the HTTP client endpoints
 builder.Services.AddHttpClient("arcgis-api", options =>
 {
-    options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
+    options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing");
 });
 builder.Services.AddHttpService("arcgis-api");
 
