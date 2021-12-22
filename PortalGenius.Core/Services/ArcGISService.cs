@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PortalGenius.Core.Services
 {
+
     public class ArcGISService
     {
         private readonly HttpService _httpService;
@@ -17,10 +20,20 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
-        public async Task<object> GetAllItems()
+        public async Task<List<Item>> GetAllItems()
         {
             // TODO: Make accountId dynamic
-            return await _httpService.GetAsync<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
+            var result = await _httpService.GetAsync<string>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
+            List<Item> item_list = new List<Item>();
+
+            item_list.Add(new Item { Name = "asd" });
+            JObject joItems = JObject.Parse(result.ToString());
+            item_list.AddRange(JsonConvert.DeserializeObject<List<Item>>((string)joItems["results"].ToString()));
+
+
+            //var result = await _httpService.GetAsync<string>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
+
+            return item_list;
         }
 
         public async Task<object> GetDataFromItem(string item_id)
