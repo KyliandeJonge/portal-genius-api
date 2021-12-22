@@ -1,7 +1,7 @@
-﻿using System.Text;
-using log4net;
+﻿using log4net;
 using Microsoft.AspNetCore.Mvc;
 using PG_API.Handlers;
+using System.Text;
 
 namespace PG_API.Controllers;
 
@@ -30,7 +30,7 @@ public class GenerateToken : Controller
             if (_asyncHandler.SetToken(_httpClient.Send(_requestMessage).Content))
             {
                 return Ok("Successfully created a new token");
-            } 
+            }
             throw new Exception("Wrong username/password");
         }
         catch (Exception e)
@@ -52,7 +52,7 @@ public class GenerateToken : Controller
             if (_asyncHandler.SetToken(_httpClient.Send(_requestMessage).Content))
             {
                 return Ok("Successful created a new token");
-            } 
+            }
             throw new Exception("Wrong username/password");
         }
         catch (Exception e)
@@ -60,7 +60,7 @@ public class GenerateToken : Controller
             Console.WriteLine(e);
             return Unauthorized(e.Message);
         }
-        
+
         _httpClient.Send(new HttpRequestMessage(HttpMethod.Post, "generate"));
     }
 }
