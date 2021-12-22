@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PortalGenius.WPF.Models
+namespace PortalGenius.Core.Models
 {
     public class Item
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PortalGenius.WPF.Models;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.WPF.Data
 {
