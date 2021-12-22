@@ -5,7 +5,7 @@ namespace PortalGenius.Core.Services
     public class HttpServiceOptions
     {
         /// <summary>
-        /// The name of the <see cref="HttpClient"/> to use.
+        ///     The name of the <see cref="HttpClient"/> to use.
         /// </summary>
         public string HttpClientName { get; set; }
     }
@@ -13,8 +13,8 @@ namespace PortalGenius.Core.Services
     public static class HttpServiceCollectionExtentions
     {
         /// <summary>
-        /// Adds the custom <see cref="HttpService"/> class to the service the service collection.
-        /// This method accepts a <paramref name="clientName"/> to specify whichs <see cref="HttpClient"/> should be used in the <see cref="HttpService"/>.
+        ///     Adds the custom <see cref="HttpService"/> class to the service the service collection.
+        ///     This method accepts a <paramref name="clientName"/> to specify whichs <see cref="HttpClient"/> should be used in the <see cref="HttpService"/>.
         /// </summary>
         /// <param name="services">The service collection to add the <see cref="HttpService"/> to.</param>
         /// <param name="clientName">The name of the <see cref="HttpClient"/> to use.</param>
