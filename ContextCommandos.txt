@@ -8,6 +8,9 @@ Zorg dat je deze volledig uitvoert (dus alle flags meenemen). Je kunt "<name>" v
 LET OP! Bij het uitvoeren van de migratie is het belangrijk dat je het juiste project en de juiste database in de appsettings gekozen hebt.
 Je kunt het juiste project kiezen naast de Playknop van Visual Studio. In DATZELFDE project moet je de waarde van "DatabaseInUse" plaatsen. Deze zijn hieronder per database benoemd.
 
+Het uitvoeren van de commando's kan via de Package Manager Console (Tools -> NuGet Package Manager -> Package Manager Console). 
+LET OP! Kies bij Default project (bovenin de Package Manager Console) voor 'PortalGenius.Infrastructure'! Want daar staan de DbContext bestanden.
+
 De migraties worden hiermee automatisch in de juiste map geplaatst (PortalGenius.Infrastructure/Data/Migrations/<context>)
 
 
