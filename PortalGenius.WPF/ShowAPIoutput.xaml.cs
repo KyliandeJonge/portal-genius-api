@@ -1,5 +1,5 @@
-﻿using PortalGenius.Core.Services;
-using JSONTreeView;
+﻿using JSONTreeView;
+using PortalGenius.Core.Services;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,9 +10,9 @@ namespace PortalGenius.WPF
     /// </summary>
     public partial class ShowAPIoutput : Page
     {
-        private readonly ArcGISService _arcGISService;
+        private readonly IArcGISService _arcGISService;
 
-        public ShowAPIoutput(ArcGISService arcGISService)
+        public ShowAPIoutput(IArcGISService arcGISService)
         {
             _arcGISService = arcGISService;
 
@@ -23,7 +23,7 @@ namespace PortalGenius.WPF
             //UserController U1 = new UserController();
             //ItemController itemcontroller = new ItemController();
             //Output.Text = itemcontroller.Post();
-            Data.ProcessJson((await _arcGISService.GetAllItems()).ToString());
+            Data.ProcessJson((await _arcGISService.GetAllItemsAsync()).ToString());
         }
     }
 }

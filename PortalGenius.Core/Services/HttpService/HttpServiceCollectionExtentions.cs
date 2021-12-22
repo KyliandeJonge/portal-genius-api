@@ -33,7 +33,7 @@ namespace PortalGenius.Core.Services
             });
 
             // Add the HttpService to the service collection
-            return services.AddTransient<HttpService>();
+            return services.AddTransient<IHttpService, HttpService>();
         }
     }
 }
