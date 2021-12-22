@@ -17,7 +17,7 @@ namespace PortalGenius.WPF
         private readonly ArcGISService _arcGISService;
         private readonly AppDbContext _appDbContext;
 
-        public MainWindow(ArcGISService arcGISService)
+        public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace PortalGenius.WPF
                 .Build();
 
             _arcGISService = arcGISService;
-            //_appDbContext = appDbContext;
+            _appDbContext = appDbContext;
 
             _host.Start();
         }
