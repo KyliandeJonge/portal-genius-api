@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using PortalGenius.Core.Services;
-using PortalGenius.WPF.Data;
+using PortalGenius.Infrastructure.Data;
 using System;
 using System.Windows;
 
@@ -26,10 +24,7 @@ namespace PortalGenius.WPF
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlite("Data Source=C:\\Users\\kylia\\OneDrive\\Documenten\\Windesheim\\jaar-4\\QSD\\TRD\\portal-genius-api\\PortalGenius.db");
-            });
+            services.AddDbContext<AppDbContext, SQLiteDbContext>();
 
             services.AddHttpClient("local-api", options =>
             {

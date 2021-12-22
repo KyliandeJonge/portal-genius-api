@@ -21,21 +21,21 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
-        public async Task<List<Item>> GetAllItems()
+        public async Task<SearchResult<Item>> GetAllItems()
         {
             // TODO: Make accountId dynamic
-            var result = (await _httpService.GetAsync<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json"));
+            var result = await _httpService.GetAsync<SearchResult<Item>>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
 
             List<Item> item_list = new List<Item>();
 
-            item_list.Add(new Item { Name = "asd" });
-            JObject joItems = JObject.Parse(result.ToString());
-            item_list.AddRange(JsonConvert.DeserializeObject<List<Item>>((string)joItems["results"].ToString()));
+            //item_list.Add(new Item { Name = "asd" });
+            //JObject joItems = JObject.Parse(result.ToString());
+            //item_list.AddRange(JsonConvert.DeserializeObject<List<Item>>((string)joItems["results"].ToString()));
 
 
             //var result = await _httpService.GetAsync<string>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
 
-            return item_list;
+            return result;
         }
 
         public async Task<object> GetDataFromItem(string item_id)

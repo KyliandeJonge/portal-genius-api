@@ -1,16 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using PortalGenius.Core.Services;
-using PortalGenius.WPF.Data;
-using System;
-using System.Collections.Generic;
+using PortalGenius.Infrastructure.Data;
 using System.ComponentModel;
 using System.Windows;
-using PortalGenius.Core.Models;
 
 namespace PortalGenius.WPF
 {
@@ -23,7 +17,7 @@ namespace PortalGenius.WPF
         private readonly ArcGISService _arcGISService;
         private readonly AppDbContext _appDbContext;
 
-        public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
+        public MainWindow(ArcGISService arcGISService)
         {
             InitializeComponent();
 
@@ -31,7 +25,6 @@ namespace PortalGenius.WPF
                 .ConfigureWebHostDefaults(webHost =>
                 {
                     webHost.UseStartup<ApiStartup>();
-
                     webHost.UseKestrel();
 
                     // Webhost URL's is configured via appsettings.{env}.json
@@ -39,7 +32,7 @@ namespace PortalGenius.WPF
                 .Build();
 
             _arcGISService = arcGISService;
-            _appDbContext = appDbContext;
+            //_appDbContext = appDbContext;
 
             _host.Start();
         }
