@@ -33,6 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="JSONTreeView" Version="1.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
 	    <PrivateAssets>all</PrivateAssets>
@@ -48,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
 	  <ProjectReference Include="..\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj" />
 	</ItemGroup>
 </Project>

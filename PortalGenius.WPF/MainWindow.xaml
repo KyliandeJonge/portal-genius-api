@@ -14,12 +14,19 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Column="0" Source="./Assets/Images/portalgenius.png" Width="Auto" Height="150" Stretch="Uniform" />
-        <Image Grid.Column="1" Source="./Assets/Images/windesheim.png" Width="Auto" Height="150" Stretch="Uniform" />
+        <Button Grid.Row="0" Content="En nu naar de API..." Click="Button_Click" Hyperlink.Click="Button_Click"/>
+        <Image Grid.Column="0" Grid.Row="1" Source="./Assets/Images/portalgenius.png" Width="Auto" Height="150" Stretch="Uniform" />
+        <Image Grid.Column="1" Grid.Row="1" Source="./Assets/Images/windesheim.png" Width="Auto" Height="150" Stretch="Uniform" />
+        
+        
     </Grid>
 </Window>
