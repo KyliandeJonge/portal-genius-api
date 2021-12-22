@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
@@ -23,9 +24,9 @@ namespace PortalGenius.Core.Services
             return await _httpService.GetAsync<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
         }
 
-        public async Task<string> GetDataFromItem(string item_id)
+        public async Task<object> GetDataFromItem(string item_id)
         {
-            return await _httpService.GetAsync<string>($"content/items/{item_id}/data?f=json");
+            return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json");
         }
 
         public async Task<object> GetAllUsers()

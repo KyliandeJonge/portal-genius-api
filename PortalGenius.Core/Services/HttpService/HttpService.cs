@@ -21,19 +21,21 @@ namespace PortalGenius.Core.Services
             _httpClient = httpClientFactory.CreateClient(httpServiceOptions.Value.HttpClientName);
             _logger = logger;
         }
-
-        public async Task<string> GetAsync<T>(string path)
+        //o3VzBD0JKC
+        public async Task<T> GetAsync<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
-            string result = default;
+            T result = default;
 
             var apiUrl = $"{_httpClient.BaseAddress}/{path}";
+
+            Console.WriteLine("Requesting: " + apiUrl);
 
             try
             {
                 var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseContentRead);
                 if (response.IsSuccessStatusCode)
-                    result = await response.Content.ReadAsStringAsync();
+                    result = await ParseHttpResponseToJsonAsync<T>(response);
                 else
                     _logger.LogWarning($"[HTTP GET {response.StatusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode);
             }
