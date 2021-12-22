@@ -14,7 +14,6 @@ public class UserController : ControllerBase
         _arcGISService = arcGISService;
     }
 
-
     [HttpPost()]
     public async Task<IActionResult> GetAllUsers()
     {
