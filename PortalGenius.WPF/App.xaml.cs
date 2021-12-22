@@ -30,6 +30,7 @@ namespace PortalGenius.WPF
         {
             InitializeConfiguration(services);
 
+            // TODO: Check if local database should be used
             services.AddDbContext<AppDbContext, SQLiteDbContext>();
 
             services.AddHttpClient("local-api", options =>

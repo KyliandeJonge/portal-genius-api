@@ -7,6 +7,10 @@ using PortalGenius.Infrastructure.Data;
 
 namespace PortalGenius.WPF
 {
+    /// <summary>
+    /// This Startup class configures the Service Provider for the Kestrel server only!
+    /// The WPF-part has its own Service Provider / Collection configured inside App.xaml.cs.
+    /// </summary>
     public class ApiStartup
     {
         private IConfiguration Configuration { get; set; }
