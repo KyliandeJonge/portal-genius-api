@@ -45,7 +45,7 @@ namespace PortalGenius.Core.HostedServices
                     await Task.Delay(interval, cancellationToken);
                 else
                 {
-                    _logger.LogError("Invalid configuration value '{0}' for property 'DataRefreshInterval'", _configuration["DataRefreshInterval"]);
+                    _logger.LogError("Invalid configuration value '{interval}' for property 'DataRefreshInterval'", _configuration["DataRefreshInterval"]);
                     break;
                 }
             }
