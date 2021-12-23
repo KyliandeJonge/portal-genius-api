@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PortalGenius.Core.Services
 {
-    public class HttpService
+    public class HttpService : IHttpService
     {
         private readonly HttpClient _httpClient;
 
