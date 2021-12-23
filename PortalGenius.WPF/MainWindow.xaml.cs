@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
-using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -19,8 +18,6 @@ namespace PortalGenius.WPF
         private readonly IHost _host;
         private readonly ArcGISService _arcGISService;
         private readonly AppDbContext _appDbContext;
-
-        private ShowAPIoutput _showAPIoutput;
 
         public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
         {
