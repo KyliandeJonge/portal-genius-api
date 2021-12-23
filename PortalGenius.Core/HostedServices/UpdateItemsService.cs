@@ -5,6 +5,13 @@ using PortalGenius.Core.Services;
 
 namespace PortalGenius.Core.HostedServices
 {
+    /// <summary>
+    ///     This background service is responsible for refreshing the ArcGIS data in the database.
+    ///     The interval time can be configured using the <c>DataRefreshInterval</c> property in appsettings.json.
+    /// </summary>
+    /// <remarks>
+    ///     As soon as the application starts, this background service starts.
+    /// </remarks>
     public class UpdateItemsService : BackgroundService
     {
         private readonly IArcGISService _arcGISService;
@@ -27,18 +34,20 @@ namespace PortalGenius.Core.HostedServices
         // Called on startup of the application
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("StartAsync() at UpdateItemsService");
+            _logger.LogDebug("StartAsync() at UpdateItemsService");
 
             while (!cancellationToken.IsCancellationRequested)
             {
                 var test = await _arcGISService.GetAllItemsAsync();
 
-                // TODO: Update database
+                // TODO: Fetch all new data, when ready: delete old items and insert new items.
 
                 _logger.LogWarning("Updating database data");
 
                 var item = test.Results.First();
                 _logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
+
+                _logger.LogInformation("Items have been refreshed");
 
                 // Get the interval value from the configuration and delay this task
                 if (TimeSpan.TryParse(_configuration["DataRefreshInterval"], out TimeSpan interval))
