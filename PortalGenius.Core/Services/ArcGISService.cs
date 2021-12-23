@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
@@ -17,10 +20,15 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
-        public async Task<object> GetAllItemsAsync()
+        public async Task<SearchResult<Item>> GetAllItemsAsync()
         {
             // TODO: Make accountId dynamic
-            return await _httpService.GetAsync<object>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
+            return await _httpService.GetAsync<SearchResult<Item>>("search?q=accountid:v16XTZeIhHAZEpwh&f=json");
+        }
+
+        public async Task<object> GetDataFromItem(string item_id)
+        {
+            return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json");
         }
 
         public async Task<object> GetAllUsersAsync()
