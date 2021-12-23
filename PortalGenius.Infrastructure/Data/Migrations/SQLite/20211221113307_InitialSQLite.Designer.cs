@@ -2,22 +2,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PortalGenius.WPF.Data;
+using PortalGenius.Infrastructure.Data;
 
 #nullable disable
 
-namespace PortalGenius.WPF.Migrations
+namespace PortalGenius.Infrastructure.Data.Migrations.SQLite
 {
-    [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SQLiteDbContext))]
+    [Migration("20211221113307_InitialSQLite")]
+    partial class InitialSQLite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
-            modelBuilder.Entity("PortalGenius.WPF.Models.Item", b =>
+            modelBuilder.Entity("PortalGenius.Core.Models.Item", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");

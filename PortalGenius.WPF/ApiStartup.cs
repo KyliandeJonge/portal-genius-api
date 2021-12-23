@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PortalGenius.WPF.Data;
+using PortalGenius.Infrastructure.Data;
 
 namespace PortalGenius.WPF
 {
@@ -21,10 +20,8 @@ namespace PortalGenius.WPF
         {
             services.AddControllers();
 
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
-            });
+            // TODO: Check if local database should be used
+            services.AddDbContext<AppDbContext, SQLiteDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

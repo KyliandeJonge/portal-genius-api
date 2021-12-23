@@ -7,17 +7,16 @@ namespace PG_API.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly ArcGISService _arcGISService;
+    private readonly IArcGISService _arcGISService;
 
-    public UserController(ArcGISService arcGISService)
+    public UserController(IArcGISService arcGISService)
     {
         _arcGISService = arcGISService;
     }
 
-
     [HttpPost()]
     public async Task<IActionResult> GetAllUsers()
     {
-        return Ok(await _arcGISService.GetAllUsers());
+        return Ok(await _arcGISService.GetAllUsersAsync());
     }
 }

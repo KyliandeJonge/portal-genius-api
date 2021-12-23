@@ -7,16 +7,16 @@ namespace PG_API.Controllers;
 [ApiController]
 public class ItemController : ControllerBase
 {
-    private readonly ArcGISService _argGISService;
+    private readonly IArcGISService _argGISService;
 
-    public ItemController(ArcGISService arcGISService)
+    public ItemController(IArcGISService arcGISService)
     {
         _argGISService = arcGISService;
     }
 
-    [HttpGet]
+    [HttpGet("/")]
     public async Task<IActionResult> GetAllItems()
     {
-        return Ok(await _argGISService.GetAllItems());
+        return Ok(await _argGISService.GetAllItemsAsync());
     }
 }

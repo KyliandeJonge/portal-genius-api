@@ -7,14 +7,14 @@ using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
-    public class ArcGISService
+    public class ArcGISService : IArcGISService
     {
-        private readonly HttpService _httpService;
+        private readonly IHttpService _httpService;
 
         private readonly ILogger<ArcGISService> _logger;
 
         public ArcGISService(
-            HttpService httpService,
+            IHttpService httpService,
             ILogger<ArcGISService> logger
         )
         {
@@ -22,12 +22,12 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
-        public async Task<object> GetAllItems()
+        public async Task<object> GetAllItemsAsync()
         {
             return await _httpService.GetAsync<object>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
         }
 
-        public async Task<object> GetAllUsers()
+        public async Task<object> GetAllUsersAsync()
         {
             return await _httpService.GetAsync<object>($"rest/portals/x/users?f=json&token={UserData.genToken}&searchUserAccess=*&filter=*&num=100");
         }

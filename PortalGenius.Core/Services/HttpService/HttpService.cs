@@ -9,7 +9,7 @@ using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
-    public class HttpService
+    public class HttpService : IHttpService
     {
         private readonly HttpClient _httpClient;
 
