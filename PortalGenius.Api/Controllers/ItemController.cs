@@ -51,7 +51,8 @@ public class ItemController : ControllerBase
     public async Task<IEnumerable<object>> GetDataFromItems(/*List<string> items*/)
     {
         var result = new List<object>();
-        var items = itemIDs;
+        List<string> items = await Task.Run(() => GetItemIds());
+
         await items.ParallelForEachAsync(async item =>
         {
             var response = await _argGISService.GetDataFromItemAsync(item);
@@ -62,7 +63,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet("/alleItemIds")]
-    public async Task<IEnumerable<string>> GetItemIds()
+    public async Task<List<string>> GetItemIds()
     {
         var result = new List<string>();
         var items = await _argGISService.GetAllItemsAsync();
