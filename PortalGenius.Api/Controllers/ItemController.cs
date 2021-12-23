@@ -54,7 +54,7 @@ public class ItemController : ControllerBase
         var items = itemIDs;
         await items.ParallelForEachAsync(async item =>
         {
-            var response = await _argGISService.GetDataFromItem(item);
+            var response = await _argGISService.GetDataFromItemAsync(item);
             //Console.WriteLine(response);
             result.Add(response);
         }, maxDegreeOfParallelism: 10);
@@ -65,7 +65,7 @@ public class ItemController : ControllerBase
     public async Task<IEnumerable<string>> GetItemIds()
     {
         var result = new List<string>();
-        var items = await _argGISService.GetAllItems();
+        var items = await _argGISService.GetAllItemsAsync();
         Parallel.ForEach(items.Results, item =>
         {
             result.Add(item.Id);
