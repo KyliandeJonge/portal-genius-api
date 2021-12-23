@@ -61,4 +61,26 @@ public class ItemController : ControllerBase
         return result;
     }
 
+    [HttpGet("/alleItemIds")]
+    public async Task<IEnumerable<string>> GetItemIds()
+    {
+        var result = new List<string>();
+        var items = await _argGISService.GetAllItems();
+        Parallel.ForEach(items.Results, item =>
+        {
+            result.Add(item.Id);
+        });
+        return result;
+
+//    "6e1cbb6a28094cec9cf628acf39a2d25",
+//    "83c0c9609f644d1687af837d2c5f13d1",
+//    "218ce37846ac43119a4c0140c91066d4",
+//    "43935cbc6fe74cc087b675bf8021b313",
+//    "ba31a93eea334386bd5263be0c0337c1",
+//    "0d1d547d554e4d48b128e797a4095998",
+//    "97eb8ea2be41421fb5284c9eea454863",
+//    "d5ca5559014844a99d2631dc6f219237",
+//    "787d67bc9cae4d8fa7a438134e6eede9",
+//    "594f514df776476ab58345fc09bdaba0"
+    }
 }
