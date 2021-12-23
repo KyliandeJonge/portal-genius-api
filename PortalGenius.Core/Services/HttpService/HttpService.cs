@@ -84,7 +84,7 @@ namespace PortalGenius.Core.Services
             
             try
             {
-                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"{_httpClient.BaseAddress}/{path}");
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUrl);
                 requestMessage.Content = stringContent;
                 requestMessage.Headers.Add("Cache-Control", "no-cache");
                 responseMessage = _httpClient.Send(requestMessage);
