@@ -38,7 +38,7 @@ namespace PortalGenius.Core.HostedServices
                 _logger.LogWarning("Updating database data");
 
                 var item = test.Results.First();
-                _logger.LogDebug("[{0}, {1}, {2}]", item.Id, item.Title, item.Created);
+                _logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
 
                 // Get the interval value from the configuration and delay this task
                 if (TimeSpan.TryParse(_configuration["DataRefreshInterval"], out TimeSpan interval))
