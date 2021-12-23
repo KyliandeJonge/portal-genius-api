@@ -34,18 +34,9 @@ namespace PortalGenius.Core.HostedServices
         // Called on startup of the application
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug("StartAsync() at UpdateItemsService");
-
             while (!cancellationToken.IsCancellationRequested)
             {
-                var test = await _arcGISService.GetAllItemsAsync();
-
-                // TODO: Fetch all new data, when ready: delete old items and insert new items.
-
-                _logger.LogWarning("Updating database data");
-
-                var item = test.Results.First();
-                _logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
+                await UpdateItemsAsync();
 
                 _logger.LogInformation("Items have been refreshed");
 
@@ -58,6 +49,18 @@ namespace PortalGenius.Core.HostedServices
                     break;
                 }
             }
+        }
+
+        private async Task UpdateItemsAsync()
+        {
+            var test = await _arcGISService.GetAllItemsAsync();
+
+            // TODO: Fetch all new data, when ready: delete old items and insert new items.
+
+            _logger.LogWarning("Updating database data");
+
+            var item = test.Results.First();
+            _logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
         }
     }
 }
