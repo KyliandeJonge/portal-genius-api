@@ -54,6 +54,8 @@ namespace PortalGenius.WPF
             var items = await _arcGISService.GetAllItemsAsync();
             _appDbContext.AddRange(items.Results);
             await _appDbContext.SaveChangesAsync();
+
+            btnGetItemsAndInsertInDatabase.IsEnabled = false;
         }
     }
 }
