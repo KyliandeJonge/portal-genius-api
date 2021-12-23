@@ -39,7 +39,7 @@ builder.Services.AddHttpClient("arcgis-api", options =>
 });
 builder.Services.AddHttpService("arcgis-api");
 
-builder.Services.AddTransient<ArcGISService>();
+builder.Services.AddTransient<IArcGISService, ArcGISService>();
 
 var app = builder.Build();
 

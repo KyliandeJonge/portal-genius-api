@@ -1,9 +1,11 @@
 ﻿
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -17,11 +19,12 @@ namespace PortalGenius.WPF
         private readonly IHost _host;
         private readonly ArcGISService _arcGISService;
         private readonly AppDbContext _appDbContext;
+        private readonly IServiceProvider _serviceProvider;
+        private ShowAPIoutput _showAPIoutput;
 
         public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
         {
             InitializeComponent();
-
             _host = Host.CreateDefaultBuilder()
                 .ConfigureWebHostDefaults(webHost =>
                 {
@@ -36,6 +39,11 @@ namespace PortalGenius.WPF
             _appDbContext = appDbContext;
 
             _host.Start();
+
+            _serviceProvider = serviceProvider;
+
+            // Finish loading component
+            InitializeComponent();
         }
 
         protected override void OnClosing(CancelEventArgs e)

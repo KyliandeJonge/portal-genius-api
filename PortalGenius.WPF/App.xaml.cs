@@ -5,6 +5,8 @@ using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System;
 using System.IO;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace PortalGenius.WPF
@@ -56,6 +58,14 @@ namespace PortalGenius.WPF
                 .Build();
 
             services.AddScoped(_ => Configuration);
+            services.AddTransient<IArcGISService, ArcGISService>();
+
+            // Windows
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<APIWindow>();
+
+            // Pages
+            services.AddTransient<ShowAPIoutput>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
