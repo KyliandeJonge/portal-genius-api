@@ -19,7 +19,7 @@ namespace PortalGenius.WPF
         private readonly IHost _host;
         private readonly ArcGISService _arcGISService;
         private readonly AppDbContext _appDbContext;
-        private readonly IServiceProvider _serviceProvider;
+
         private ShowAPIoutput _showAPIoutput;
 
         public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
@@ -40,8 +40,6 @@ namespace PortalGenius.WPF
 
             _host.Start();
 
-            _serviceProvider = serviceProvider;
-
             // Finish loading component
             InitializeComponent();
         }
@@ -56,7 +54,7 @@ namespace PortalGenius.WPF
 
         private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
-            var items = await _arcGISService.GetAllItems();
+            var items = await _arcGISService.GetAllItemsAsync();
             _appDbContext.AddRange(items.Results);
             await _appDbContext.SaveChangesAsync();
         }

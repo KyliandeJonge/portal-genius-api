@@ -21,7 +21,7 @@ namespace PortalGenius.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlite("Data Source=C:\\Users\\kylia\\OneDrive\\Documenten\\Windesheim\\jaar-4\\QSD\\TRD\\portal-genius-api\\PortalGenius.db");
+            builder.UseSqlite(Configuration.GetConnectionString("Sqlite"));
         }
     }
 }
