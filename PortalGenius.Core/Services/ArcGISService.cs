@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services

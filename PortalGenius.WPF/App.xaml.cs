@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PortalGenius.Core.HostedServices;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System;
 using System.IO;
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace PortalGenius.WPF
@@ -42,6 +40,10 @@ namespace PortalGenius.WPF
 
             services.AddHttpService("local-api");
             services.AddTransient<ArcGISService>();
+
+            // TODO: Should the Update Items Service be called upon application startup?
+            // TODO: Move to the ApiStartup when required services are available in the ApiStartup ServiceCollection
+            services.AddHostedService<UpdateItemsService>();
 
             // Windows
             services.AddSingleton<MainWindow>();

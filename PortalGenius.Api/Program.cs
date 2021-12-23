@@ -42,6 +42,7 @@ builder.Services.AddHttpService("arcgis-api");
 
 builder.Services.AddTransient<IArcGISService, ArcGISService>();
 
+// TODO: Should the Update Items Service be called upon application startup?
 builder.Services.AddHostedService<UpdateItemsService>();
 
 var app = builder.Build();

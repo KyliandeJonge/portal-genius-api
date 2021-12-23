@@ -1,57 +1,53 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PortalGenius.Core.Services;
 
 namespace PortalGenius.Core.HostedServices
 {
-    public class UpdateItemsService : IHostedService, IDisposable
+    public class UpdateItemsService : BackgroundService
     {
-        private Timer _timer;
-
         private readonly IArcGISService _arcGISService;
+
+        private readonly IConfiguration _configuration;
 
         private readonly ILogger<UpdateItemsService> _logger;
 
         public UpdateItemsService(
             IArcGISService arcGISService,
+            IConfiguration configuration,
             ILogger<UpdateItemsService> logger
         )
         {
             _arcGISService = arcGISService;
+            _configuration = configuration;
             _logger = logger;
         }
 
         // Called on startup of the application
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("StartAsync() at UpdateItemsService");
 
-            // Start the callback immeadiatly (zero) and repeat every minute
-            _timer = new Timer(UpdateItems, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var test = await _arcGISService.GetAllItemsAsync();
 
-            return Task.CompletedTask;
-        }
+                _logger.LogWarning("Updating database data");
+                _logger.LogDebug(test.Results.First().Type);
 
-        // Called on graceful shutdown of the application
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _logger.LogInformation("StopAsync() at UpdateItemsService");
+                try
+                {
+                    // Get the interval value from the configuration and delay this task
+                    var interval = TimeSpan.Parse(_configuration["DataRefreshInterval"]);
 
-            _timer?.Change(Timeout.Infinite, 0);
-
-            return Task.CompletedTask;
-        }
-
-        private void UpdateItems(object state)
-        {
-            _logger.LogInformation("UpdateItems() at UpdateItemsService");
-
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose();
+                    await Task.Delay(interval, cancellationToken);
+                }
+                catch (Exception)
+                {
+                    _logger.LogError("Invalid configuration value '{0}' for property 'DataRefreshInterval'", _configuration["DataRefreshInterval"]);
+                }
+            }
         }
     }
 }
