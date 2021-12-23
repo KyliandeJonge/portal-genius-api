@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PortalGenius.WPF"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         >
     <Window.Resources>
@@ -13,7 +14,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid ShowGridLines="True">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -22,8 +23,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="btnGetItemsAndInsertInDatabase" Content="Insert Items In Database" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnGetItemsAndInsertInDatabase_Click" Margin="0,10,0,0"/>
-
+        <Button x:Name="btnGetItemsAndInsertInDatabase" Content="Insert Items In Database" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Click="btnGetItemsAndInsertInDatabase_Click" Margin="0,10,0,0" Width="140"/>
 
         <Image Grid.Column="0" Source="./Assets/Images/portalgenius.png" Width="Auto" />
         <Image Grid.Column="1" Grid.Row="0" Source="./Assets/Images/windesheim.png"  VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>

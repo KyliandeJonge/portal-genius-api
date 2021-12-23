@@ -5,7 +5,9 @@ using Microsoft.Extensions.Hosting;
 using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 
 namespace PortalGenius.WPF
@@ -45,17 +47,28 @@ namespace PortalGenius.WPF
         {
             // Stop the Kestrel host when this window closes
             _host.Dispose();
-
             base.OnClosing(e);
         }
 
+        /// <summary>
+        /// Retrieves Arcgis items from our api and saves them into the Sqlite database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
+            
             var items = await _arcGISService.GetAllItemsAsync();
             _appDbContext.AddRange(items.Results);
             await _appDbContext.SaveChangesAsync();
+            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
 
             btnGetItemsAndInsertInDatabase.IsEnabled = false;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
         }
     }
 }
