@@ -33,19 +33,20 @@ namespace PortalGenius.Core.HostedServices
             {
                 var test = await _arcGISService.GetAllItemsAsync();
 
+                // TODO: Update database
+
                 _logger.LogWarning("Updating database data");
-                _logger.LogDebug(test.Results.First().Type);
 
-                try
-                {
-                    // Get the interval value from the configuration and delay this task
-                    var interval = TimeSpan.Parse(_configuration["DataRefreshInterval"]);
+                var item = test.Results.First();
+                _logger.LogDebug("[{0}, {1}, {2}]", item.Id, item.Title, item.Created);
 
+                // Get the interval value from the configuration and delay this task
+                if (TimeSpan.TryParse(_configuration["DataRefreshInterval"], out TimeSpan interval))
                     await Task.Delay(interval, cancellationToken);
-                }
-                catch (Exception)
+                else
                 {
                     _logger.LogError("Invalid configuration value '{0}' for property 'DataRefreshInterval'", _configuration["DataRefreshInterval"]);
+                    break;
                 }
             }
         }
