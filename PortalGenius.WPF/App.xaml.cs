@@ -30,7 +30,7 @@ namespace PortalGenius.WPF
             });
 
             services.AddHttpService("local-api");
-            services.AddTransient<ArcGISService>();
+            services.AddTransient<IArcGISService, ArcGISService>();
 
             // Windows
             services.AddSingleton<MainWindow>();
