@@ -270,3 +270,4 @@ Packages.props
 
 # Development files
 PortalGenius.Api/appsettings.Development.json
+PortalGenius.WPF/appsettings.Development.json
