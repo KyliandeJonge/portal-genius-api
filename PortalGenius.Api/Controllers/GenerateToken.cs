@@ -7,9 +7,9 @@ namespace PG_API.Controllers;
 [ApiController]
 public class GenerateToken : Controller
 {
-    private readonly ArcGISService _arcGisService;
+    private readonly IArcGISService _arcGisService;
 
-    public GenerateToken(ArcGISService arcGisService)
+    public GenerateToken(IArcGISService arcGisService)
     {
         _arcGisService = arcGisService;
     }
