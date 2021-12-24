@@ -22,6 +22,10 @@ namespace PortalGenius.Core.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Maakt eerst nieuwe token aan en gebruikt die om item's op te halen.
+        /// </summary>
+        /// <returns>items in object</returns>
         public async Task<object> GetAllItemsAsync()
         {
             try
