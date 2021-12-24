@@ -3,6 +3,9 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Mime;
 using System.Text;
+using System.Text.RegularExpressions;
+using PG_API.Data;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
@@ -52,7 +55,7 @@ namespace PortalGenius.Core.Services
             return result;
         }
 
-        public async Task<T> PostAsync<T>(string path, object requestBody)
+        /*public async Task<T> PostAsync<T>(string path, object requestBody)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
@@ -74,10 +77,47 @@ namespace PortalGenius.Core.Services
                 _logger.LogError($"[HTTP POST 500] Error while connecting with: ({apiUrl}).");
                 _logger.LogError(ex.Message);
             }
-
+            
             return result;
-        }
+        }*/
 
+        public async Task<T> PostAsync<T>(string path, StringContent stringContent)
+        {
+            // Het resultaat is standaard de "standaard" waarde van T (meestal null).
+            T result = default;
+            string apiUrl = $"{_httpClient.BaseAddress}/{path}";
+            HttpResponseMessage responseMessage;    
+            
+            try
+            {
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUrl);
+                requestMessage.Content = stringContent;
+                requestMessage.Headers.Add("Cache-Control", "no-cache");
+                responseMessage = _httpClient.Send(requestMessage);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError($"[HTTP POST 500] Error while connecting with: ({apiUrl}).");
+                _logger.LogError(ex.Message);
+                return result;
+            }
+
+            if (!responseMessage.IsSuccessStatusCode) return result;
+            {
+                try
+                {
+                    result = await ParseHttpResponseToJsonAsync<T>(responseMessage);
+                }
+                catch (RegexParseException ex)
+                {
+                    _logger.LogError("could not parse input to Jons");
+                    _logger.LogError(ex.Message);
+                }
+            }
+            return result;
+           
+        }
+        
         /// <summary>
         /// Converteer de JSON HTTP response naar de gewenste vorm.
         /// </summary>

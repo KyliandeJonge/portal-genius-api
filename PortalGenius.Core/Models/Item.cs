@@ -1,25 +1,22 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json.Serialization;
 
 namespace PortalGenius.Core.Models
 {
     public class Item
     {
-
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty("owner")]
+        [JsonPropertyName("owner")]
         public string Owner { get; set; }
 
-        [JsonProperty("created")]
-        //[JsonConverter(typeof(UnixDateTimeConverter))]
-        public string Created { get; set; }
-
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("created")]
+        public string Created { get; set; }
+
+        [JsonPropertyName("type")]
         public string Type { get; set; }
     }
 }

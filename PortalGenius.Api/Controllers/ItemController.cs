@@ -91,5 +91,11 @@ public class ItemController : ControllerBase
         });
         return result.ToList();
     }
+    
+    [HttpGet("{item_id}/data")]
+    public async Task<IActionResult> GetDataFromItem(string item_id)
+    {
+        return Ok(await _argGISService.GetDataFromItemAsync(item_id));
+    }
 }
 
