@@ -41,7 +41,7 @@ namespace PortalGenius.Core.Services
                  $"referer='https://portalgenius.maps.arcgis.com/rest'&username={username}&password={password}&client=referer&f=json", Encoding.UTF8, "application/x-www-form-urlencoded"));
             try 
             {
-                if (token.Token.Equals("null"))
+                if (!token.Token.Equals("null"))
                 {
                     UserData.genToken = token.Token;
                     _logger.LogTrace($"new token: {UserData.genToken}");
