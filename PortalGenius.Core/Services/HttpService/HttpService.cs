@@ -44,7 +44,11 @@ namespace PortalGenius.Core.Services
                 _logger.LogError($"[HTTP GET 500] Error while connecting with: ({apiUrl}).");
                 _logger.LogError(ex.Message);
             }
-
+            catch (JsonReaderException ex)
+            {
+                _logger.LogError("Error while parsing JSON");
+                _logger.LogError(ex.Message);
+            }
             return result;
         }
 
