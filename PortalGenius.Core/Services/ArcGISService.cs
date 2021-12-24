@@ -1,9 +1,7 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using PG_API.Data;
 using PortalGenius.Core.Models;
+using System.Text;
 
 namespace PortalGenius.Core.Services
 {
@@ -26,7 +24,7 @@ namespace PortalGenius.Core.Services
         /// Maakt eerst nieuwe token aan en gebruikt die om item's op te halen.
         /// </summary>
         /// <returns>items in object</returns>
-        public async Task<object> GetAllItemsAsync()
+        public async Task<SearchResult<Item>> GetAllItemsAsync()
         {
             try
             {
@@ -39,7 +37,12 @@ namespace PortalGenius.Core.Services
                 _logger.LogError(e.Message);
                 throw;
             }
-            return await _httpService.GetAsync<object>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
+            return await _httpService.GetAsync<SearchResult<Item>>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
+        }
+
+        public async Task<object> GetDataFromItem(string item_id)
+        {
+            return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json");
         }
 
         public async Task<object> GetAllUsersAsync()

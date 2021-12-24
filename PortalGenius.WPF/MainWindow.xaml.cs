@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using PortalGenius.Core.Models;
+using PortalGenius.Core.Services;
+using PortalGenius.Infrastructure.Data;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 
 namespace PortalGenius.WPF
@@ -14,12 +18,12 @@ namespace PortalGenius.WPF
     public partial class MainWindow : Window
     {
         private readonly IHost _host;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ArcGISService _arcGISService;
+        private readonly AppDbContext _appDbContext;
 
-        private ShowAPIoutput _showAPIoutput;
-
-        public MainWindow(IServiceProvider serviceProvider)
+        public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
         {
+            InitializeComponent();
             _host = Host.CreateDefaultBuilder()
                 .ConfigureWebHostDefaults(webHost =>
                 {
@@ -30,9 +34,10 @@ namespace PortalGenius.WPF
                 })
                 .Build();
 
-            _host.Start();
+            _arcGISService = arcGISService;
+            _appDbContext = appDbContext;
 
-            _serviceProvider = serviceProvider;
+            _host.Start();
 
             // Finish loading component
             InitializeComponent();
@@ -42,24 +47,28 @@ namespace PortalGenius.WPF
         {
             // Stop the Kestrel host when this window closes
             _host.Dispose();
-
             base.OnClosing(e);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Retrieves Arcgis items from our api and saves them into the Sqlite database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
-            if (_showAPIoutput == null)
-            {
-                // Get the instance of ShowAPIOutput
-                _showAPIoutput = _serviceProvider.GetService<ShowAPIoutput>();
+            
+            var items = await _arcGISService.GetAllItemsAsync();
+            _appDbContext.AddRange(items.Results);
+            await _appDbContext.SaveChangesAsync();
+            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
 
-                this.Content = _showAPIoutput;
-                _showAPIoutput.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                _showAPIoutput.Visibility = Visibility.Visible;
-            }
+            btnGetItemsAndInsertInDatabase.IsEnabled = false;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
         }
     }
 }
