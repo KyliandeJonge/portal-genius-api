@@ -1,7 +1,5 @@
-﻿using log4net;
-using Microsoft.AspNetCore.Mvc;
-using PG_API.Handlers;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
+using PortalGenius.Core.Services;
 
 namespace PG_API.Controllers;
 
@@ -9,58 +7,34 @@ namespace PG_API.Controllers;
 [ApiController]
 public class GenerateToken : Controller
 {
-    private static readonly ILog _log = LogManager.GetLogger(typeof(UserController));
-    private readonly AsyncHandler _asyncHandler = new();
-    private readonly HttpClient _httpClient = new();
-    private readonly HttpRequestMessage _requestMessage =
-        new(HttpMethod.Post, "https://arcgis.com/sharing/generateToken");
+    private readonly IArcGISService _arcGisService;
 
-    private string username = "Windesheim";
-    private string password = "vwa*dbq-amb4waf!KPA";
-
-    [HttpPost("/generate")]
-    public ObjectResult GenerateNewToken()
+    public GenerateToken(IArcGISService arcGisService)
     {
-        try
-        {
-            _requestMessage.Content = new StringContent(
-                $"referer=https://portalgenius.maps.arcgis.com/rest&username={username}&password={password}&client=referer&f=json",
-                Encoding.UTF8, "application/x-www-form-urlencoded");
-            _requestMessage.Headers.Add("Cache-Control", "no-cache");
-            if (_asyncHandler.SetToken(_httpClient.Send(_requestMessage).Content))
-            {
-                return Ok("Successfully created a new token");
-            }
-            throw new Exception("Wrong username/password");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return new BadRequestObjectResult(e.Message);
-        }
+        _arcGisService = arcGisService;
     }
 
-    [HttpPost("/set/{username}/{password}")]
-    public ObjectResult SetAccount(string username, string password)
+    [HttpGet("/generate")]
+    private async Task<IActionResult> GenerateNewToken()
     {
+        return Ok(await _arcGisService.GetGenToken());
+    }
+
+    [HttpPut("/{username}/{password}")]
+    public async Task<IActionResult> SetNewCreds(string username, string password)
+    {
+        var obj = await _arcGisService.GetGenTokenWithNewCreds(username, password);
         try
         {
-            _requestMessage.Content = new StringContent(
-                $"referer=https://portalgenius.maps.arcgis.com/rest&username={username}&password={password}&client=referer&f=json",
-                Encoding.UTF8, "application/x-www-form-urlencoded");
-            _requestMessage.Headers.Add("Cache-Control", "no-cache");
-            if (_asyncHandler.SetToken(_httpClient.Send(_requestMessage).Content))
+            if (obj.Token.Equals("null"))
             {
-                return Ok("Successful created a new token");
+                return Problem("could not set new username/password");
             }
-            throw new Exception("Wrong username/password");
         }
-        catch (Exception e)
+        catch (NullReferenceException e)
         {
-            Console.WriteLine(e);
-            return Unauthorized(e.Message);
+            return Problem("could not set new username/password");
         }
-
-        _httpClient.Send(new HttpRequestMessage(HttpMethod.Post, "generate"));
+        return Ok(obj);
     }
 }
