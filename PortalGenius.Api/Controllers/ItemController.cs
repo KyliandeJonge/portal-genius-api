@@ -3,6 +3,7 @@ using PortalGenius.Core.Services;
 using Dasync.Collections;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using PortalGenius.Core.Models;
+using System.Diagnostics;
 
 namespace PG_API.Controllers;
 
@@ -29,13 +30,25 @@ public class ItemController : ControllerBase
         var result = new List<object>();
         List<string> items = await GetItemIds();
 
-        await items.ParallelForEachAsync(async item =>
+        var stopwatch = Stopwatch.StartNew();
+
+        try
         {
-            var response = await _argGISService.GetDataFromItemAsync(item);
+            await items.ParallelForEachAsync(async item =>
+            {
+                var response = await _argGISService.GetDataFromItemAsync(item);
             //Console.WriteLine(response);
             result.Add(response);
 
-        }, maxDegreeOfParallelism: 10);
+            }, maxDegreeOfParallelism: 10);
+        }
+        finally
+        {
+            stopwatch.Stop();
+            var time = stopwatch.ElapsedMilliseconds;
+            Console.WriteLine("#################################\nTijd: " + time + " ms\n#################################");
+            stopwatch.Reset();
+        }
 
         return result;
     }
@@ -46,11 +59,23 @@ public class ItemController : ControllerBase
         var result = new List<object>();
         List<string> items = await GetItemIds();
 
-        foreach (var item in items)
+        var stopwatch = Stopwatch.StartNew();
+
+        try
         {
-            var response = await _argGISService.GetDataFromItemAsync(item);
-            //Console.WriteLine(response);
-            result.Add(response);
+            foreach (var item in items)
+            {
+                var response = await _argGISService.GetDataFromItemAsync(item);
+                //Console.WriteLine(response);
+                result.Add(response);
+            }
+        }
+        finally
+        {
+            stopwatch.Stop();
+            var time = stopwatch.ElapsedMilliseconds;
+            Console.WriteLine("#################################\nTijd: " + time + " ms\n#################################");
+            stopwatch.Reset();
         }
 
         return result;
