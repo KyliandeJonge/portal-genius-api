@@ -57,13 +57,13 @@ namespace PortalGenius.WPF
         /// <param name="e"></param>
         private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
-            
+            _appDbContext.RemoveRange(_appDbContext.Items.ToList());
+            _appDbContext.SaveChanges();
+
             var items = await _arcGISService.GetAllItemsAsync();
             _appDbContext.AddRange(items.Results);
             await _appDbContext.SaveChangesAsync();
             dgMainDg.ItemsSource = _appDbContext.Items.ToList();
-
-            btnGetItemsAndInsertInDatabase.IsEnabled = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
