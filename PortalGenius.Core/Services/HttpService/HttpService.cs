@@ -24,13 +24,15 @@ namespace PortalGenius.Core.Services
             _httpClient = httpClientFactory.CreateClient(httpServiceOptions.Value.HttpClientName);
             _logger = logger;
         }
-
+        //o3VzBD0JKC
         public async Task<T> GetAsync<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
 
             var apiUrl = $"{_httpClient.BaseAddress}/{path}";
+
+            Console.WriteLine("Requesting: " + apiUrl);
 
             try
             {
@@ -45,7 +47,11 @@ namespace PortalGenius.Core.Services
                 _logger.LogError($"[HTTP GET 500] Error while connecting with: ({apiUrl}).");
                 _logger.LogError(ex.Message);
             }
-
+            catch (JsonReaderException ex)
+            {
+                _logger.LogError("Error while parsing JSON");
+                _logger.LogError(ex.Message);
+            }
             return result;
         }
 

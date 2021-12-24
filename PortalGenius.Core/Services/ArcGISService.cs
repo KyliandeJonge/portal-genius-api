@@ -45,7 +45,7 @@ namespace PortalGenius.Core.Services
             }
         }
 
-        public async Task<object> GetDataFromItem(string item_id)
+        public async Task<object> GetDataFromItemAsync(string item_id)
         {
             TryGetToken();
             return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json&token={UserData.genToken}");
