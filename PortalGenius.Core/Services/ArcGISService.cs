@@ -26,6 +26,12 @@ namespace PortalGenius.Core.Services
         /// <returns>items in object</returns>
         public async Task<SearchResult<Item>> GetAllItemsAsync()
         {
+            TryGetToken();
+            return await _httpService.GetAsync<SearchResult<Item>>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
+        }
+
+        private async void TryGetToken()
+        {
             try
             {
                 await GetGenToken();
@@ -37,16 +43,17 @@ namespace PortalGenius.Core.Services
                 _logger.LogError(e.Message);
                 throw;
             }
-            return await _httpService.GetAsync<SearchResult<Item>>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
         }
 
         public async Task<object> GetDataFromItem(string item_id)
         {
-            return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json");
+            TryGetToken();
+            return await _httpService.GetAsync<object>($"content/items/{item_id}/data?f=json&token={UserData.genToken}");
         }
 
         public async Task<object> GetAllUsersAsync()
         {
+            TryGetToken();
             return await _httpService.GetAsync<object>($"rest/portals/x/users?f=json&token={UserData.genToken}&searchUserAccess=*&filter=*&num=100");
         }
 
