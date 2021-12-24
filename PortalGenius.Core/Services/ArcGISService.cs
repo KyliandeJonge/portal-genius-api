@@ -47,6 +47,13 @@ namespace PortalGenius.Core.Services
             return await _httpService.GetAsync<object>($"rest/portals/x/users?f=json&token={UserData.genToken}&searchUserAccess=*&filter=*&num=100");
         }
 
+        /// <summary>
+        /// probeert token op te halen met bekende of nieuwe credentials
+        /// </summary>
+        /// <param name="username">Niet verplicht, als die niet is ingevuld wordt de oude opgeslagen gebruikersnaam gebruikt</param>
+        /// <param name="password">Niet verplicht, als die niet is ingevuld wordt het oude opgeslagen wachtwoord gebruikt gebruikt</param>
+        /// <param name="newCreds">Niet verplicht, als deze op true staat worden de meegegeven username en password opgelagen als deze juist zijn</param>
+        /// <returns>GenerateToken</returns>
         public async Task<GenerateToken> GetGenToken(string username = "", string password = "", bool newCreds = false)
         {
             if (username.Equals("")) { username = UserData.username; } 
