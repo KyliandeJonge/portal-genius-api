@@ -28,7 +28,7 @@ namespace PortalGenius.Core.Services
         {
             try
             {
-                GetGenToken();
+                await GetGenToken();
                 _logger.LogTrace("New token generated");
             }
             catch (Exception e)
