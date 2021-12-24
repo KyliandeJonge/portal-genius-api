@@ -15,7 +15,7 @@ public class GenerateToken : Controller
     }
 
     [HttpGet("/generate")]
-    public async Task<IActionResult> GenerateNewToken()
+    private async Task<IActionResult> GenerateNewToken()
     {
         return Ok(await _arcGisService.GetGenToken());
     }

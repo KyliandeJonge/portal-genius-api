@@ -24,6 +24,17 @@ namespace PortalGenius.Core.Services
 
         public async Task<object> GetAllItemsAsync()
         {
+            try
+            {
+                GetGenToken();
+                _logger.LogTrace("New token generated");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not get new token");
+                _logger.LogError(e.Message);
+                throw;
+            }
             return await _httpService.GetAsync<object>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
         }
 
