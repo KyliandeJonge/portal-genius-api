@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PortalGenius.Core.Interfaces;
 using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
@@ -19,9 +20,13 @@ namespace PortalGenius.WPF
     {
         private readonly IHost _host;
         private readonly ArcGISService _arcGISService;
-        private readonly AppDbContext _appDbContext;
 
-        public MainWindow(ArcGISService arcGISService, AppDbContext appDbContext)
+        private readonly IRepository<Item> _itemRepository;
+
+        public MainWindow(
+            ArcGISService arcGISService, 
+            IRepository<Item> itemRepository
+        )
         {
             InitializeComponent();
             _host = Host.CreateDefaultBuilder()
@@ -35,7 +40,7 @@ namespace PortalGenius.WPF
                 .Build();
 
             _arcGISService = arcGISService;
-            _appDbContext = appDbContext;
+            _itemRepository = itemRepository;
 
             _host.Start();
 
@@ -59,16 +64,17 @@ namespace PortalGenius.WPF
         {
             
             var items = await _arcGISService.GetAllItemsAsync();
-            _appDbContext.AddRange(items.Results);
-            await _appDbContext.SaveChangesAsync();
-            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
+
+            _itemRepository.AddRange(items.Results);
+            await _itemRepository.SaveChangesAsync();
+            dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
 
             btnGetItemsAndInsertInDatabase.IsEnabled = false;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            dgMainDg.ItemsSource = _appDbContext.Items.ToList();
+            dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
         }
     }
 }

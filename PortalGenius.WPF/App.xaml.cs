@@ -8,6 +8,7 @@ using System.IO;
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
+using PortalGenius.Core.Interfaces;
 
 namespace PortalGenius.WPF
 {
@@ -37,11 +38,13 @@ namespace PortalGenius.WPF
 
             services.AddHttpClient("local-api", options =>
             {
-                options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
+                options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing");
             });
 
             services.AddHttpService("local-api");
             services.AddTransient<ArcGISService>();
+
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             // Windows
             services.AddSingleton<MainWindow>();
