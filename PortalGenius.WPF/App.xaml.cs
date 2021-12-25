@@ -44,6 +44,7 @@ namespace PortalGenius.WPF
             services.AddHttpService("local-api");
             services.AddTransient<ArcGISService>();
 
+            // Register all available repositories
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             // Windows

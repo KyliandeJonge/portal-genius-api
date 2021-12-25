@@ -1,4 +1,5 @@
-﻿using PortalGenius.Core.Services;
+﻿using PortalGenius.Core.Interfaces;
+using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,9 @@ builder.Services.AddHttpClient("arcgis-api", options =>
 builder.Services.AddHttpService("arcgis-api");
 
 builder.Services.AddTransient<IArcGISService, ArcGISService>();
+
+// Register all available repositories
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
