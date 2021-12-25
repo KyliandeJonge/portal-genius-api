@@ -34,8 +34,4 @@
     <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Migrations\SQLite\" />
-  </ItemGroup>
-
 </Project>
