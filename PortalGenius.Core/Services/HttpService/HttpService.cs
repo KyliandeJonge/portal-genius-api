@@ -90,15 +90,20 @@ namespace PortalGenius.Core.Services
             
             try
             {
-                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUrl);
-                requestMessage.Content = stringContent;
+                var requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUrl)
+                {
+                    Content = stringContent
+                };
+
                 requestMessage.Headers.Add("Cache-Control", "no-cache");
-                responseMessage = _httpClient.Send(requestMessage);
+
+                responseMessage = await _httpClient.SendAsync(requestMessage);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError($"[HTTP POST 500] Error while connecting with: ({apiUrl}).");
                 _logger.LogError(ex.Message);
+
                 return result;
             }
 
@@ -108,14 +113,14 @@ namespace PortalGenius.Core.Services
                 {
                     result = await ParseHttpResponseToJsonAsync<T>(responseMessage);
                 }
-                catch (RegexParseException ex)
+                catch (JsonReaderException ex)
                 {
-                    _logger.LogError("could not parse input to Jons");
+                    _logger.LogError("Error while parsing JSON");
                     _logger.LogError(ex.Message);
                 }
             }
+
             return result;
-           
         }
         
         /// <summary>
