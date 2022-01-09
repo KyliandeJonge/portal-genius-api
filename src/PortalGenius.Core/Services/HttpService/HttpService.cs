@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.Net.Mime;
-using System.Text;
-using System.Text.RegularExpressions;
-using PG_API.Data;
-using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
