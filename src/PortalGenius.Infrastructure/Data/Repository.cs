@@ -36,7 +36,7 @@ namespace PortalGenius.Infrastructure.Data
             return await _table.ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(string id)
         {
             return await _table.FindAsync(id);
         }
