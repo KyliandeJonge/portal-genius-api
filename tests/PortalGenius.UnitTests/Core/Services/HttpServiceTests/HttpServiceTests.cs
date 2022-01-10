@@ -28,7 +28,7 @@ namespace PortalGenius.UnitTests.Core.Services
             // Configure the HttpClient for each test
             // A factory is required as the HttpService injects a Client Factory
             Mock.Get(factory)
-
+                // The name of the client is not relevant for now
                 .Setup(x => x.CreateClient(It.IsAny<string>()))
                 .Returns(() =>
                 {
@@ -42,10 +42,9 @@ namespace PortalGenius.UnitTests.Core.Services
             _httpHandlerMock.SetupAnyRequest()
                 .ReturnsResponse(HttpStatusCode.NotFound);
 
-            // The actual HttpClientName is not relevant for unit-testing in this case.
+            // The actual options are not relevant for unit-testing in this case.
             var options = Options.Create(new HttpServiceOptions());
             
-
             _httpService = new HttpService(factory, options, _httpServiceLogger.Object);
         }
     }
