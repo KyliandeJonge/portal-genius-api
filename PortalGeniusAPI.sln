@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DAC580E5-CC2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DCFCC2E-E5AF-4ABB-B581-647E0A8B308B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalGenius.IntegrationTests", "PortalGenius.IntegrationTests\PortalGenius.IntegrationTests.csproj", "{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalGenius.IntegrationTests", "tests\PortalGenius.IntegrationTests\PortalGenius.IntegrationTests.csproj", "{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
