@@ -99,8 +99,7 @@ namespace PortalGenius.Core.Services
 
         public async Task<GenerateToken> GetGenTokenWithNewCreds(string username, string password)
         {
-            GenerateToken token = GetGenToken(username, password, true).Result;
-            return token;
+            return await GetGenToken(username, password, true); ;
         }
     }
 

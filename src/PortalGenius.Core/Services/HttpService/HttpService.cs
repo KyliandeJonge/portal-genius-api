@@ -19,15 +19,13 @@ namespace PortalGenius.Core.Services
             _httpClient = httpClientFactory.CreateClient(httpServiceOptions.Value.HttpClientName);
             _logger = logger;
         }
-        //o3VzBD0JKC
+        
         public async Task<T> GetAsync<T>(string path)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
 
             var apiUrl = $"{_httpClient.BaseAddress}/{path}";
-
-            Console.WriteLine("Requesting: " + apiUrl);
 
             try
             {
@@ -50,64 +48,34 @@ namespace PortalGenius.Core.Services
             return result;
         }
 
-        /*public async Task<T> PostAsync<T>(string path, object requestBody)
-        {
-            // Het resultaat is standaard de "standaard" waarde van T (meestal null).
-            T result = default;
-
-            var apiUrl = $"{_httpClient.BaseAddress}/{path}";
-
-            try
-            {
-                var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, MediaTypeNames.Application.Json);
-
-                var response = await _httpClient.PostAsync(apiUrl, content);
-                if (response.IsSuccessStatusCode)
-                    result = await ParseHttpResponseToJsonAsync<T>(response);
-                else
-                    _logger.LogWarning($"[HTTP POST {response.StatusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode);
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError($"[HTTP POST 500] Error while connecting with: ({apiUrl}).");
-                _logger.LogError(ex.Message);
-            }
-            
-            return result;
-        }*/
-
         public async Task<T> PostAsync<T>(string path, StringContent stringContent)
         {
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
+
             string apiUrl = $"{_httpClient.BaseAddress}/{path}";
-            HttpResponseMessage responseMessage;    
+
+            HttpResponseMessage response;    
             
             try
             {
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUrl)
                 {
-                    Content = stringContent
+                    Content = stringContent,
                 };
-
                 requestMessage.Headers.Add("Cache-Control", "no-cache");
 
-                responseMessage = await _httpClient.SendAsync(requestMessage);
+                response = await _httpClient.SendAsync(requestMessage);
+
+                if (response.IsSuccessStatusCode)
+                    result = await ParseHttpResponseToJsonAsync<T>(response);
+                else
+                    _logger.LogWarning("[HTTP POST {statusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode, apiUrl);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError("[HTTP POST 500] Error while connecting with: ({apiUrl}).", apiUrl);
                 _logger.LogError(ex.Message);
-
-                return result;
-            }
-
-            if (!responseMessage.IsSuccessStatusCode) 
-                return result;
-
-            try
-            {
-                result = await ParseHttpResponseToJsonAsync<T>(responseMessage);
             }
             catch (JsonReaderException ex)
             {
