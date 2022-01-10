@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.Api", "src\PortalGenius.Api\PortalGenius.Api.csproj", "{5B3795DB-777B-48F5-B9A1-692EAD3E19B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "tests\Test_Console\Test_Console.csproj", "{C919DE44-D88D-40E9-9258-B0E285C39F83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "src\Test_Console\Test_Console.csproj", "{C919DE44-D88D-40E9-9258-B0E285C39F83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.WPF", "src\PortalGenius.WPF\PortalGenius.WPF.csproj", "{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}"
 EndProject
