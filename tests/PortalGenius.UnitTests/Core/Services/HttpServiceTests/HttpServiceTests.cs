@@ -22,9 +22,11 @@ namespace PortalGenius.UnitTests.Core.Services
             _httpHandlerMock = new Mock<HttpMessageHandler>();
             var factory = _httpHandlerMock.CreateClientFactory();
 
-            var options = Options.Create(new HttpServiceOptions { HttpClientName = "test-client" });
+            // Configure the HttpClient for each test
+            // A factory is required as the HttpService injects a Client Factory
+            Mock.Get(factory)
 
-            Mock.Get(factory).Setup(x => x.CreateClient(options.Value.HttpClientName))
+                .Setup(x => x.CreateClient(It.IsAny<string>()))
                 .Returns(() =>
                 {
                     var client = _httpHandlerMock.CreateClient();
@@ -33,10 +35,12 @@ namespace PortalGenius.UnitTests.Core.Services
                     return client;
                 });
 
-            // A simple example that returns 404 for any request
+            // Return a 404 resonse for each request by default
             _httpHandlerMock.SetupAnyRequest()
                 .ReturnsResponse(HttpStatusCode.NotFound);
 
+            // The actual HttpClientName is not relevant for unit-testing in this case.
+            var options = Options.Create(new HttpServiceOptions());
             var logging = new Mock<ILogger<HttpService>>();
 
             _httpService = new HttpService(factory, options, logging.Object);
