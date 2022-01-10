@@ -35,11 +35,11 @@ namespace PortalGenius.Core.Services
                 if (response.IsSuccessStatusCode)
                     result = await ParseHttpResponseToJsonAsync<T>(response);
                 else
-                    _logger.LogWarning($"[HTTP GET {response.StatusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode);
+                    _logger.LogWarning("[HTTP GET {statusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode, apiUrl);
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError($"[HTTP GET 500] Error while connecting with: ({apiUrl}).");
+                _logger.LogError("[HTTP GET 500] Error while connecting with: ({apiUrl}).", apiUrl);
                 _logger.LogError(ex.Message);
             }
             catch (JsonReaderException ex)
@@ -96,7 +96,7 @@ namespace PortalGenius.Core.Services
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError($"[HTTP POST 500] Error while connecting with: ({apiUrl}).");
+                _logger.LogError("[HTTP POST 500] Error while connecting with: ({apiUrl}).", apiUrl);
                 _logger.LogError(ex.Message);
 
                 return result;
