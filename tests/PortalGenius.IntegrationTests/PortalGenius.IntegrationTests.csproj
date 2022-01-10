@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\PortalGenius.Api\PortalGenius.Api.csproj" />
+    <ProjectReference Include="..\..\src\PortalGenius.Api\PortalGenius.Api.csproj" />
   </ItemGroup>
 
 </Project>
