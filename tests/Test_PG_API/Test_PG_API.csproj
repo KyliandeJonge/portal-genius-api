@@ -20,8 +20,4 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\PortalGenius.Api\PortalGenius.Api.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -14,11 +14,14 @@ namespace PortalGenius.UnitTests.Core.Services
         protected readonly IHttpService _httpService;
 
         protected readonly Mock<HttpMessageHandler> _httpHandlerMock;
+        protected readonly Mock<ILogger<HttpService>> _httpServiceLogger;
 
         protected const string ApiBaseUrl = "https://pg.arcgis-demo.dev/rest";
 
         public HttpServiceTests()
         {
+            _httpServiceLogger = new Mock<ILogger<HttpService>>();
+
             _httpHandlerMock = new Mock<HttpMessageHandler>();
             var factory = _httpHandlerMock.CreateClientFactory();
 
@@ -41,9 +44,9 @@ namespace PortalGenius.UnitTests.Core.Services
 
             // The actual HttpClientName is not relevant for unit-testing in this case.
             var options = Options.Create(new HttpServiceOptions());
-            var logging = new Mock<ILogger<HttpService>>();
+            
 
-            _httpService = new HttpService(factory, options, logging.Object);
+            _httpService = new HttpService(factory, options, _httpServiceLogger.Object);
         }
     }
 }
