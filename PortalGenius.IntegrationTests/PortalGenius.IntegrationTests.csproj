@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -21,8 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\PortalGenius.Core\PortalGenius.Core.csproj" />
-    <ProjectReference Include="..\src\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj" />
+    <ProjectReference Include="..\src\PortalGenius.Api\PortalGenius.Api.csproj" />
   </ItemGroup>
 
 </Project>

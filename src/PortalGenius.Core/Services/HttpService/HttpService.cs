@@ -102,17 +102,17 @@ namespace PortalGenius.Core.Services
                 return result;
             }
 
-            if (!responseMessage.IsSuccessStatusCode) return result;
+            if (!responseMessage.IsSuccessStatusCode) 
+                return result;
+
+            try
             {
-                try
-                {
-                    result = await ParseHttpResponseToJsonAsync<T>(responseMessage);
-                }
-                catch (JsonReaderException ex)
-                {
-                    _logger.LogError("Error while parsing JSON");
-                    _logger.LogError(ex.Message);
-                }
+                result = await ParseHttpResponseToJsonAsync<T>(responseMessage);
+            }
+            catch (JsonReaderException ex)
+            {
+                _logger.LogError("Error while parsing JSON");
+                _logger.LogError(ex.Message);
             }
 
             return result;
