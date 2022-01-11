@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PortalGenius.Core.Data;
 using PortalGenius.Core.Models;
 using System.Text;
 

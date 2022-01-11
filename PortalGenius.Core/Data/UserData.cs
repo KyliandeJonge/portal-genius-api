@@ -1,4 +1,4 @@
-﻿namespace PG_API.Data;
+﻿namespace PortalGenius.Core.Data;
 
 public static class UserData
 {
