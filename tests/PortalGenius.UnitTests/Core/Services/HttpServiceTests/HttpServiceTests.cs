@@ -16,7 +16,7 @@ namespace PortalGenius.UnitTests.Core.Services
         protected readonly Mock<HttpMessageHandler> _httpHandlerMock;
         protected readonly Mock<ILogger<HttpService>> _httpServiceLogger;
 
-        protected const string ApiBaseUrl = "https://pg.arcgis-demo.dev/rest";
+        protected const string ApiBaseUrl = "https://pg.arcgis-demo.dev";
 
         public HttpServiceTests()
         {

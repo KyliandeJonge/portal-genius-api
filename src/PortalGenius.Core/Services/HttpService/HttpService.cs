@@ -25,7 +25,7 @@ namespace PortalGenius.Core.Services
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
 
-            var apiUrl = $"{_httpClient.BaseAddress}/{path}";
+            var apiUrl = GenerateRequestUrl(path);
 
             try
             {
@@ -53,7 +53,7 @@ namespace PortalGenius.Core.Services
             // Het resultaat is standaard de "standaard" waarde van T (meestal null).
             T result = default;
 
-            string apiUrl = $"{_httpClient.BaseAddress}/{path}";
+            string apiUrl = GenerateRequestUrl(path);
 
             HttpResponseMessage response;    
             
@@ -87,7 +87,7 @@ namespace PortalGenius.Core.Services
         }
         
         /// <summary>
-        /// Converteer de JSON HTTP response naar de gewenste vorm.
+        ///     Converteer de JSON HTTP response naar de gewenste vorm.
         /// </summary>
         /// <typeparam name="T">De vorm waar de JSON naartoe geconverteerd moet worden.</typeparam>
         /// <param name="response">De HTTP-response message.</param>
@@ -101,5 +101,13 @@ namespace PortalGenius.Core.Services
 
             return new JsonSerializer().Deserialize<T>(jsonReader);
         }
+
+        /// <summary>
+        ///     Generate the absolute request URL to the API. This method trims the leading slash from the base address and
+        ///     appends the slash manually to prevent double slashes which causes a 404 error.
+        /// </summary>
+        /// <param name="path">The relative path in the URL (e.g. rest/items/{itemId})</param>
+        /// <returns>The correct absolute URL to call</returns>
+        private string GenerateRequestUrl(string path) => $"{_httpClient.BaseAddress.ToString().Trim('/')}/{path}";
     }
 }
