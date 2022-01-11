@@ -2,6 +2,8 @@
 using Moq;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
+using PortalGenius.Core.Models;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,18 +21,19 @@ namespace PortalGenius.UnitTests.Core.Services
         public async Task PostAsync_ShouldReturnData_WhenResponseIsSuccess()
         {
             // Arrange
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var itemRequestBody = new Item { Id = Guid.NewGuid().ToString() };
+            var content = JsonConvert.SerializeObject(itemRequestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, $"{ApiBaseUrl}/test-endpoint")
                 .ReturnsResponse(content, "application/json")
                 .Verifiable();
 
             // Act
-            var result = await _httpService.PostAsync<object>("test-endpoint", new StringContent(content));
+            var result = await _httpService.PostAsync<Item>("test-endpoint", new StringContent(content));
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(result.Id, itemRequestBody.Id);
         }
 
         [Fact]
@@ -40,8 +43,8 @@ namespace PortalGenius.UnitTests.Core.Services
             var endpoint = $"{ApiBaseUrl}/test-endpoint";
             var statusCode = HttpStatusCode.BadRequest;
 
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var requestBody = new { Test = "Name" };
+            var content = JsonConvert.SerializeObject(requestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, endpoint)
                 .ReturnsResponse(statusCode);
@@ -60,8 +63,8 @@ namespace PortalGenius.UnitTests.Core.Services
             var endpoint = $"{ApiBaseUrl}/test-endpoint";
             var statusCode = HttpStatusCode.BadRequest;
 
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var requestBody = new { Test = "Name" };
+            var content = JsonConvert.SerializeObject(requestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, endpoint)
                 .ReturnsResponse(statusCode);
@@ -77,8 +80,8 @@ namespace PortalGenius.UnitTests.Core.Services
         public async Task PostAsync_ShouldReturnNull_WhenHttpRequestExceptionThrown()
         {
             // Arrange
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var requestBody = new { Test = "Name" };
+            var content = JsonConvert.SerializeObject(requestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, $"{ApiBaseUrl}/test-endpoint")
                 .Throws<HttpRequestException>();
@@ -96,8 +99,8 @@ namespace PortalGenius.UnitTests.Core.Services
             // Arrange
             var endpoint = $"{ApiBaseUrl}/test-endpoint";
 
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var requestBody = new { Test = "Name" };
+            var content = JsonConvert.SerializeObject(requestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, endpoint)
                 .Throws<HttpRequestException>();
@@ -113,8 +116,8 @@ namespace PortalGenius.UnitTests.Core.Services
         public async Task PostAsync_ShouldReturnNull_WhenJsonReaderExceptionThrown()
         {
             // Arrange
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var requestBody = new { Test = "Name" };
+            var content = JsonConvert.SerializeObject(requestBody);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Post, $"{ApiBaseUrl}/test-endpoint")
                 .Throws<JsonReaderException>();

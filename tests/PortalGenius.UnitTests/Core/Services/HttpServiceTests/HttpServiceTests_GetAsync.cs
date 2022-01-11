@@ -2,6 +2,8 @@
 using Moq;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
+using PortalGenius.Core.Models;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,17 +21,18 @@ namespace PortalGenius.UnitTests.Core.Services
         public async Task GetAsync_ShouldReturnData_WhenResponseIsSuccess()
         {
             // Arrange
-            var responseBody = new { Test = "Name" };
-            var content = JsonConvert.SerializeObject(responseBody);
+            var itemResponse = new Item { Id = Guid.NewGuid().ToString() };
+            var content = JsonConvert.SerializeObject(itemResponse);
 
             _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-endpoint")
                 .ReturnsResponse(content, "application/json");
 
             // Act
-            var result = await _httpService.GetAsync<object>("test-endpoint");
+            var result = await _httpService.GetAsync<Item>("test-endpoint");
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(result.Id, itemResponse.Id);
         }
 
         [Fact]

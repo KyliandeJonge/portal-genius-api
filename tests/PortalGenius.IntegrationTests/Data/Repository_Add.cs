@@ -20,8 +20,7 @@ namespace PortalGenius.IntegrationTests.Data
             repository.Add(item);
             await repository.SaveChangesAsync();
 
-            var newItem = (await repository.GetAllAsync())
-                            .FirstOrDefault();
+            var newItem = (await repository.GetAllAsync()).FirstOrDefault();
 
             // Arrange
             Assert.Equal(testId, newItem?.Id);

@@ -1,31 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
-using Moq;
-using Moq.Contrib.HttpClient;
+﻿using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
 using PortalGenius.Core.Models;
-using PortalGenius.Core.Services;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace PortalGenius.UnitTests.Core.Services
 {
-    public class ArcGISServiceTests : HttpServiceTests
+    public class ArcGISServiceTests_GetAllItemsAsync : ArcGISServiceTests
     {
-        private readonly IArcGISService _argGISService;
-
-        public ArcGISServiceTests() : base()
+        public ArcGISServiceTests_GetAllItemsAsync() : base()
         {
-            var logger = new Mock<ILogger<ArcGISService>>();
-
-            // Mock the generate token URI
-            var generateTokenContent = JsonConvert.SerializeObject(new GenerateToken { Token = "1234" });
-            _httpHandlerMock.SetupRequest(HttpMethod.Post, $"{ApiBaseUrl}/generateToken")
-                .ReturnsResponse(generateTokenContent, "application/json");
-
-            _argGISService = new ArcGISService(base._httpService, logger.Object);
         }
 
         [Fact]
