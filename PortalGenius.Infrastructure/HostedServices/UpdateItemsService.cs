@@ -41,7 +41,7 @@ namespace PortalGenius.Infrastructure.HostedServices
         // Called on startup of the application
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            while (! cancellationToken.IsCancellationRequested)
             {
                 await UpdateItemsAsync();
 
@@ -58,27 +58,28 @@ namespace PortalGenius.Infrastructure.HostedServices
 
         private async Task UpdateItemsAsync()
         {
+            // Fetch all items from ArcGIS
             var itemSearchResults = await _arcGISService.GetAllItemsAsync();
 
-            // TODO: Fetch all new data, when ready: delete old items and insert new items.
-
+            // Background services need their own scope to use services
             using (var scope = _service.CreateScope())
             {
+                // Work via the Item repository
                 var repo = scope.ServiceProvider.GetRequiredService<IRepository<Item>>();
 
+                // Remove the old items first
                 _logger.LogWarning("REMOVING existing data");
                 repo.RemoveRange(await repo.GetAllAsync());
 
+                // Bulk insert the latest items.
                 _logger.LogWarning("Updating database data");
                 repo.AddRange(itemSearchResults.Results);
 
+                // Mutate the changes
                 await repo.SaveChangesAsync();
             }
 
             _logger.LogInformation("{count} item(s) inserted into the database", itemSearchResults.Results.Count());
-
-            //var item = itemSearchResults.Results.First();
-            //_logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
         }
     }
 }
