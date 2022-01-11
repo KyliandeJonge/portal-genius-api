@@ -67,7 +67,7 @@ namespace PortalGenius.Core.Services
         /// <param name="password">Niet verplicht, als die niet is ingevuld wordt het oude opgeslagen wachtwoord gebruikt gebruikt</param>
         /// <param name="newCreds">Niet verplicht, als deze op true staat worden de meegegeven username en password opgelagen als deze juist zijn</param>
         /// <returns>GenerateToken</returns>
-        public async Task<GenerateToken> GetGenToken(string username = "", string password = "", bool newCreds = false)
+        public async Task<GenerateToken> GetGenTokenAsync(string username = "", string password = "", bool newCreds = false)
         {
             if (username.Equals("")) { username = UserData.username; } 
             if (password.Equals("")) { password = UserData.password; }
