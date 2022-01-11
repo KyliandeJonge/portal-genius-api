@@ -1,7 +1,7 @@
-﻿﻿using PortalGenius.Core.HostedServices;
-using PortalGenius.Core.Interfaces;
+﻿using PortalGenius.Core.Interfaces;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
+using PortalGenius.Infrastructure.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

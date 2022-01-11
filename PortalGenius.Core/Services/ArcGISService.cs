@@ -26,11 +26,11 @@ namespace PortalGenius.Core.Services
         /// <returns>items in object</returns>
         public async Task<SearchResult<Item>> GetAllItemsAsync()
         {
-            TryGetToken();
+            await TryGetToken();
             return await _httpService.GetAsync<SearchResult<Item>>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
         }
 
-        private async void TryGetToken()
+        private async Task TryGetToken()
         {
             try
             {
@@ -47,13 +47,13 @@ namespace PortalGenius.Core.Services
 
         public async Task<object> GetDataFromItemAsync(string item_id)
         {
-            TryGetToken();
+            await TryGetToken();
             return await _httpService.GetAsync<object>($"rest/content/items/{item_id}/data?f=json&token={UserData.genToken}");
         }
 
         public async Task<object> GetAllUsersAsync()
         {
-            TryGetToken();
+            await TryGetToken();
             return await _httpService.GetAsync<object>($"rest/portals/x/users?f=json&token={UserData.genToken}&searchUserAccess=*&filter=*&num=100");
         }
 
@@ -88,7 +88,7 @@ namespace PortalGenius.Core.Services
 
                 return token;
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException)
             {
                 return null;
             }

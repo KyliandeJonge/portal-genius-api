@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PortalGenius.Core.Interfaces;
+using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 
-namespace PortalGenius.Core.HostedServices
+namespace PortalGenius.Infrastructure.HostedServices
 {
     /// <summary>
     ///     This background service is responsible for refreshing the ArcGIS data in the database.
@@ -18,16 +21,20 @@ namespace PortalGenius.Core.HostedServices
 
         private readonly IConfiguration _configuration;
 
+        private readonly IServiceProvider _service;
+
         private readonly ILogger<UpdateItemsService> _logger;
 
         public UpdateItemsService(
             IArcGISService arcGISService,
             IConfiguration configuration,
+            IServiceProvider service,
             ILogger<UpdateItemsService> logger
         )
         {
             _arcGISService = arcGISService;
             _configuration = configuration;
+            _service = service;
             _logger = logger;
         }
 
@@ -37,8 +44,6 @@ namespace PortalGenius.Core.HostedServices
             while (!cancellationToken.IsCancellationRequested)
             {
                 await UpdateItemsAsync();
-
-                _logger.LogInformation("Items have been refreshed");
 
                 // Get the interval value from the configuration and delay this task
                 if (TimeSpan.TryParse(_configuration["DataRefreshInterval"], out TimeSpan interval))
@@ -53,14 +58,29 @@ namespace PortalGenius.Core.HostedServices
 
         private async Task UpdateItemsAsync()
         {
-            var test = await _arcGISService.GetAllItemsAsync();
+            var itemSearchResults = await _arcGISService.GetAllItemsAsync();
 
             // TODO: Fetch all new data, when ready: delete old items and insert new items.
 
-            _logger.LogWarning("Updating database data");
+            using (var scope = _service.CreateScope())
+            {
+                var repo = scope.ServiceProvider.GetRequiredService<IRepository<Item>>();
 
-            var item = test.Results.First();
-            _logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
+                _logger.LogWarning("REMOVING existing data");
+                repo.RemoveRange(await repo.GetAllAsync());
+
+                await repo.SaveChangesAsync();
+
+                _logger.LogWarning("Updating database data");
+                repo.AddRange(itemSearchResults.Results);
+
+                await repo.SaveChangesAsync();
+            }
+
+            _logger.LogInformation("{count} item(s) inserted into the database", itemSearchResults.Results.Count());
+
+            //var item = itemSearchResults.Results.First();
+            //_logger.LogDebug("[{id}, {title}, {created}]", item.Id, item.Title, item.Created);
         }
     }
 }

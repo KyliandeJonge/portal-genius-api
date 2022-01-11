@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PortalGenius.Core.Interfaces;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System;
 using System.IO;
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using System.Windows;
-using PortalGenius.Core.Interfaces;
 
 namespace PortalGenius.WPF
 {
