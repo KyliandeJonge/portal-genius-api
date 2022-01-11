@@ -69,8 +69,6 @@ namespace PortalGenius.Infrastructure.HostedServices
                 _logger.LogWarning("REMOVING existing data");
                 repo.RemoveRange(await repo.GetAllAsync());
 
-                await repo.SaveChangesAsync();
-
                 _logger.LogWarning("Updating database data");
                 repo.AddRange(itemSearchResults.Results);
 
