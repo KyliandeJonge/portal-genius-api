@@ -1,4 +1,5 @@
-﻿using PortalGenius.Core.HostedServices;
+﻿﻿using PortalGenius.Core.HostedServices;
+using PortalGenius.Core.Interfaces;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 
@@ -36,7 +37,7 @@ builder.Services.AddSwaggerGen();
 // Configure the HTTP client endpoints
 builder.Services.AddHttpClient("arcgis-api", options =>
 {
-    options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
+    options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing");
 });
 builder.Services.AddHttpService("arcgis-api");
 
@@ -44,6 +45,9 @@ builder.Services.AddTransient<IArcGISService, ArcGISService>();
 
 // TODO: Should the Update Items Service be called upon application startup?
 builder.Services.AddHostedService<UpdateItemsService>();
+
+// Register all available repositories
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 

@@ -1,25 +1,26 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json.Serialization;
 
 namespace PortalGenius.Core.Models
 {
     public class SearchResult<T> where T : class
     {
-        [JsonProperty("query")]
+        [JsonPropertyName("query")]
         public string Query { get; set; }
 
-        [JsonProperty("total")]
+        [JsonPropertyName("total")]
         public int Total { get; set; }
 
-        [JsonProperty("start")]
+        [JsonPropertyName("start")]
         public int Start { get; set; }
 
-        [JsonProperty("num")]
+        [JsonPropertyName("num")]
         public int Num { get; set; }
 
-        [JsonProperty("nextStart")]
+        [JsonPropertyName("nextStart")]
         public int NextStart { get; set; }
 
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public T[] Results { get; set; }
 
     }

@@ -6,8 +6,12 @@ namespace PortalGenius.Core.Services
     {
         public Task<SearchResult<Item>> GetAllItemsAsync();
 
+        public Task<object> GetDataFromItemAsync(string item_id);
+
         public Task<object> GetAllUsersAsync();
 
-        Task<object> GetDataFromItem(string item_id);
+        public Task<GenerateToken> GetGenToken(string username = "", string password = "", bool newCreds = false);
+
+        public Task<GenerateToken> GetGenTokenWithNewCreds(string username, string password);
     }
 }

@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PortalGenius.Core.HostedServices;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System;
 using System.IO;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
+using PortalGenius.Core.Interfaces;
 
 namespace PortalGenius.WPF
 {
@@ -35,15 +38,14 @@ namespace PortalGenius.WPF
 
             services.AddHttpClient("local-api", options =>
             {
-                options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing/rest");
+                options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing");
             });
 
             services.AddHttpService("local-api");
             services.AddTransient<ArcGISService>();
 
-            // TODO: Should the Update Items Service be called upon application startup?
-            // TODO: Move to the ApiStartup when required services are available in the ApiStartup ServiceCollection
-            services.AddHostedService<UpdateItemsService>();
+            // Register all available repositories
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             // Windows
             services.AddSingleton<MainWindow>();
