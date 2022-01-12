@@ -65,7 +65,7 @@ namespace PortalGenius.WPF
             
             var items = await _arcGISService.GetAllItemsAsync();
 
-            _itemRepository.AddRange(items.Results);
+            _itemRepository.AddRange(items);
             await _itemRepository.SaveChangesAsync();
             dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
 

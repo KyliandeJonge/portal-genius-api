@@ -85,7 +85,7 @@ public class ItemController : ControllerBase
     {
         var result = new List<string>();
         var items = await _argGISService.GetAllItemsAsync();
-        Parallel.ForEach(items.Results, item =>
+        Parallel.ForEach(items, item =>
         {
             result.Add(item.Id);
         });

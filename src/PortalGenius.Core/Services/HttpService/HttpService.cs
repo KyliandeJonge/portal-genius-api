@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
@@ -45,6 +46,59 @@ namespace PortalGenius.Core.Services
                 _logger.LogError("Error while parsing JSON");
                 _logger.LogError(ex.Message);
             }
+            return result;
+        }
+
+        public async Task<List<T>> GetSearchResultsAsync<T>(string path) where T : class
+        {
+            // Het resultaat is standaard de "standaard" waarde van T (meestal null).
+            var result = new List<T>();
+
+            var apiUrl = GenerateRequestUrl(path);
+            var nextStart = -1;
+
+            do
+            {
+                var nextUrl = (nextStart != -1) ? $"{apiUrl}&start={nextStart}" : apiUrl;
+
+                var response = await _httpClient
+                    .GetAsync(nextUrl, HttpCompletionOption.ResponseContentRead)
+                    .ContinueWith(async (searchTask) =>
+                    {
+                        try
+                        {
+                            var response = await searchTask;
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var searchResult = await ParseHttpResponseToJsonAsync<SearchResult<T>>(response);
+
+                                if (searchResult != null)
+                                {
+                                    // Build the full list to return later after the loop.
+                                    if (searchResult.Results.Any())
+                                        result.AddRange(searchResult.Results);
+
+                                    // Get the URL for the next page
+                                    nextStart = searchResult.NextStart;
+                                }
+                            }
+                            else
+                                _logger.LogWarning("[HTTP GET {statusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode, apiUrl);
+                        }
+                        catch (HttpRequestException ex)
+                        {
+                            _logger.LogError("[HTTP GET 500] Error while connecting with: ({apiUrl}).", apiUrl);
+                            _logger.LogError(ex.Message);
+                        }
+                        catch (JsonReaderException ex)
+                        {
+                            _logger.LogError("Error while parsing JSON");
+                            _logger.LogError(ex.Message);
+                        }
+                    });
+
+            } while (nextStart != -1);
+
             return result;
         }
 

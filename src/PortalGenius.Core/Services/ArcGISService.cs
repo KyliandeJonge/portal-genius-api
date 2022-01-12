@@ -24,10 +24,10 @@ namespace PortalGenius.Core.Services
         ///     Maakt eerst nieuwe token aan en gebruikt die om item's op te halen.
         /// </summary>
         /// <returns>items in object</returns>
-        public async Task<SearchResult<Item>> GetAllItemsAsync()
+        public async Task<List<Item>> GetAllItemsAsync()
         {
             await TryGetToken();
-            return await _httpService.GetAsync<SearchResult<Item>>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
+            return await _httpService.GetSearchResultsAsync<Item>($"rest/search?q=accountid:{UserData.accountID}&f=json&token={UserData.genToken}");
         }
 
         private async Task TryGetToken()

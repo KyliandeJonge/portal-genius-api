@@ -59,7 +59,7 @@ namespace PortalGenius.Infrastructure.HostedServices
         private async Task UpdateItemsAsync()
         {
             // Fetch all items from ArcGIS
-            var itemSearchResults = await _arcGISService.GetAllItemsAsync();
+            var items = await _arcGISService.GetAllItemsAsync();
 
             // Background services need their own scope to use services
             using (var scope = _service.CreateScope())
@@ -73,13 +73,13 @@ namespace PortalGenius.Infrastructure.HostedServices
 
                 // Bulk insert the latest items.
                 _logger.LogWarning("Updating database data");
-                repo.AddRange(itemSearchResults.Results);
+                repo.AddRange(items);
 
                 // Mutate the changes
                 await repo.SaveChangesAsync();
             }
 
-            _logger.LogInformation("{count} item(s) inserted into the database", itemSearchResults.Results.Count());
+            _logger.LogInformation("{count} item(s) inserted into the database", items.Count());
         }
     }
 }
