@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using PortalGenius.Core.Models;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,29 +15,16 @@ namespace PortalGenius.UnitTests.Core.Services
         }
 
         [Fact]
-        public async Task GetAllItemsAsync_ShouldReturnItemSearchResult_WhenItemsAvailable()
+        public async Task GetGenTokenAsync_ShouldBLEEEP_WhenBLOOOP()
         {
             // Arrange
-            var searchResults = new SearchResult<Item>
-            {
-                // Mark no new entries beyond first resultset
-                NextStart = -1,
-                Results = new Item[]
-                {
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                }
-            };
-
-            _httpHandlerMock.SetupRequest(HttpMethod.Get, r => r.RequestUri.AbsolutePath.StartsWith("/rest/search"))
-                .ReturnsResponse(JsonConvert.SerializeObject(searchResults), "application/json");
+            
 
             // Act
-            var result = await _argGISService.GetAllItemsAsync();
+            
 
             // Assert
-            Assert.Equal(searchResults.Results.Length, result.Count());
+            
         }
     }
 }
