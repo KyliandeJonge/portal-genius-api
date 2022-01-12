@@ -51,7 +51,7 @@ namespace PortalGenius.Core.Services
 
         public async Task<List<T>> GetSearchResultsAsync<T>(string path) where T : class
         {
-            // Het resultaat is standaard de "standaard" waarde van T (meestal null).
+            // Het resultaat is standaard een lege lijst van het type T.
             var result = new List<T>();
 
             var apiUrl = GenerateRequestUrl(path);
