@@ -101,6 +101,11 @@ namespace PortalGenius.Core.Services
         {
             return await GetGenTokenAsync(username, password, true); ;
         }
+
+        public Task<GenerateToken> GetGenToken(string username = "", string password = "", bool newCreds = false)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
