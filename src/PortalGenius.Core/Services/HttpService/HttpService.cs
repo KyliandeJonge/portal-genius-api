@@ -31,6 +31,24 @@ namespace PortalGenius.Core.Services
             try
             {
                 var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseContentRead);
+                // 12-01-2022 MME: ik begrijp dat het sneller tikt en minder regels in gebruik neemt
+                // maar: nooit de accolades weglaten! zelfs niet voor 1 regel
+                // deze optie is een potentieel risico voor logische fouten, en in de lijst van fouten die je in een applicatie kan hebben
+                // zijn logische fouten de moeilijkste om te vinden
+                // ter voorbeeld:
+                // var x = 10
+                // if(x = 10)
+                //    x++;
+                // x++;
+                // wat is de uitkomst bij x = 10?
+                // wat is de uitkomst als we van x = 9 maken?
+                // nu komt de change, oh je moet een x++ toevoegen in het geval van x = 10
+                // if(x = 10)
+                //    x++;
+                //    x++;
+                // x++;
+                // wat is de uitkomst bij x = 10?
+                // wat is de uitkomst als we van x = 9 maken?
                 if (response.IsSuccessStatusCode)
                     result = await ParseHttpResponseToJsonAsync<T>(response);
                 else
@@ -52,11 +70,14 @@ namespace PortalGenius.Core.Services
         public async Task<List<T>> GetSearchResultsAsync<T>(string path) where T : class
         {
             // Het resultaat is standaard een lege lijst van het type T.
+
             var result = new List<T>();
 
             var apiUrl = GenerateRequestUrl(path);
             var nextStart = -1;
 
+
+            // 12-01-2022 MME: is het hier de bedoeling dat de request multi threaded worden uitgevoerd?
             do
             {
                 var nextUrl = (nextStart != -1) ? $"{apiUrl}&start={nextStart}" : apiUrl;
@@ -65,6 +86,7 @@ namespace PortalGenius.Core.Services
                     .GetAsync(nextUrl, HttpCompletionOption.ResponseContentRead)
                     .ContinueWith(async (searchTask) =>
                     {
+                        // 12-01-2022 MME: het nesten met die lambda-functies is heel cool, maar je leesbaarheid wordt een heel stuk beter als je de inhoud van continuewith naar een aparte methode verplaatst
                         try
                         {
                             var response = await searchTask;

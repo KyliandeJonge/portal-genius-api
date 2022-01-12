@@ -31,6 +31,7 @@ public class GenerateToken : Controller
                 return Problem("could not set new username/password");
             }
         }
+        // 12-01-2022 MME: zie eerder opmerking, geen teksten terug geven met "null" en ook geen try-catch voor nullreference exceptions
         catch (NullReferenceException)
         {
             return Problem("could not set new username/password");

@@ -76,6 +76,10 @@ namespace PortalGenius.Core.Services
                  $"referer='https://portalgenius.maps.arcgis.com/rest'&username={username}&password={password}&client=referer&f=json", Encoding.UTF8, "application/x-www-form-urlencoded"));
             try 
             {
+                // 12-01-2022 MME: test voor de tekst "null"?
+                // string.isnullorempty(token.Token) en als de token geen waarde heeft dan geef je string.empty terug, je geeft vanuit de API nooit een tekst 'null' terug
+                // eigenlijk moet je je afvragen als de token er niet is of je ipv http 200 niet een http 404 moet terug geven, je doet een postasync en dan kun je ook de http code uitlezen
+                // is die http code niet 200 dan stop je dus
                 if (!token.Token.Equals("null"))
                 {
                     UserData.genToken = token.Token;
@@ -91,6 +95,10 @@ namespace PortalGenius.Core.Services
 
                 return token;
             }
+            // 12-01-2022 MME: het afvangen van een nullreference exception doe je niet
+            // - maak slim gebruik van null coalescing operator
+            // een test van object == null -> return is in runtime veel efficienter dan een try/catch
+            // try/catch clauses zijn heel erg slecht voor de performance van je applicatie
             catch (NullReferenceException)
             {
                 return null;

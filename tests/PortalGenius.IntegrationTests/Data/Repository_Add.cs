@@ -20,6 +20,8 @@ namespace PortalGenius.IntegrationTests.Data
             repository.Add(item);
             await repository.SaveChangesAsync();
 
+            // MME 12-01-2022: leesbaarheid wordt beter als je dit gewoon verdeeld over 2 regels
+            // daarnaast geeft het meer mogelijkheden om defensief te programmeren
             var newItem = (await repository.GetAllAsync()).FirstOrDefault();
 
             // Arrange
