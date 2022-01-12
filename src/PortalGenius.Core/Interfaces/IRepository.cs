@@ -4,7 +4,7 @@ namespace PortalGenius.Core.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class 
     {
-        public Task<TEntity> GetByIdAsync(int id);
+        public Task<TEntity> GetByIdAsync(string id);
 
         public Task<IEnumerable<TEntity>> GetAllAsync();
 

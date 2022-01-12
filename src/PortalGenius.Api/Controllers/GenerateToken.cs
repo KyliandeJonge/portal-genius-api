@@ -31,7 +31,7 @@ public class GenerateToken : Controller
                 return Problem("could not set new username/password");
             }
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             return Problem("could not set new username/password");
         }
