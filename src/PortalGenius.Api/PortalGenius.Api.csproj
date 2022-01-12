@@ -26,5 +26,8 @@
       <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
       <ProjectReference Include="..\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="PortalGenius.IntegrationTests" />
+    </ItemGroup>
 
 </Project>
