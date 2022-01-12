@@ -17,13 +17,13 @@ public class GenerateToken : Controller
     [HttpGet("/generate")]
     private async Task<IActionResult> GenerateNewToken()
     {
-        return Ok(await _arcGisService.GetGenToken());
+        return Ok(await _arcGisService.GetGenTokenAsync());
     }
 
     [HttpPut("/{username}/{password}")]
     public async Task<IActionResult> SetNewCreds(string username, string password)
     {
-        var obj = await _arcGisService.GetGenTokenWithNewCreds(username, password);
+        var obj = await _arcGisService.GetGenTokenWithNewCredsAsync(username, password);
         try
         {
             if (obj.Token.Equals("null"))
