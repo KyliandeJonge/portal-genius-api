@@ -8,34 +8,23 @@ using Xunit;
 
 namespace PortalGenius.UnitTests.Core.Services
 {
-    public class ArcGISServiceTests_GetAllItemsAsync : ArcGISServiceTests
+    public class ArcGISServiceTests_GetGenTokenAsync : ArcGISServiceTests
     {
-        public ArcGISServiceTests_GetAllItemsAsync() : base()
+        public ArcGISServiceTests_GetGenTokenAsync() : base()
         {
         }
 
         [Fact]
-        public async Task GetAllItemsAsync_ShouldReturnItemSearchResult_WhenItemsAvailable()
+        public async Task GetGenTokenAsync_ShouldBLEEEP_WhenBLOOOP()
         {
             // Arrange
-            var searchResults = new SearchResult<Item>
-            {
-                Results = new Item[]
-                {
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                }
-            };
-
-            _httpHandlerMock.SetupRequest(HttpMethod.Get, r => r.RequestUri.AbsolutePath.StartsWith("/rest/search"))
-                .ReturnsResponse(JsonConvert.SerializeObject(searchResults), "application/json");
+            
 
             // Act
-            var result = await _argGISService.GetAllItemsAsync();
+            
 
             // Assert
-            Assert.Equal(searchResults.Results.Length, result.Results.Length);
+            
         }
     }
 }
