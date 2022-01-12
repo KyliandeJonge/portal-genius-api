@@ -15,7 +15,7 @@ namespace PortalGenius.UnitTests.Core.Services
         {
         }
 
-        [Fact]
+        //[Fact]
         public async Task GetDataFromItemAsync_ShouldReturnItemData_WhenItemsExists()
         {
             throw new NotImplementedException("No support for item data response yet");

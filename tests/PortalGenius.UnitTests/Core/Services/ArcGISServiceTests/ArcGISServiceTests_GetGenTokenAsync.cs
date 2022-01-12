@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PortalGenius.Core.Models;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,6 +21,8 @@ namespace PortalGenius.UnitTests.Core.Services
             // Arrange
             var searchResults = new SearchResult<Item>
             {
+                // Mark no new entries beyond first resultset
+                NextStart = -1,
                 Results = new Item[]
                 {
                     new Item { Id = Guid.NewGuid().ToString() },
@@ -35,7 +38,7 @@ namespace PortalGenius.UnitTests.Core.Services
             var result = await _argGISService.GetAllItemsAsync();
 
             // Assert
-            Assert.Equal(searchResults.Results.Length, result.Results.Length);
+            Assert.Equal(searchResults.Results.Length, result.Count());
         }
     }
 }
