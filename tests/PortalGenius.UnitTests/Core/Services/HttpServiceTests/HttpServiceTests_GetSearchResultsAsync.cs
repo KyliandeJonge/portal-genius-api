@@ -24,6 +24,7 @@ namespace PortalGenius.UnitTests.Core.Services
             // Arrange
             var searchResponse = new SearchResult<Item>
             {
+                // Mark no new entries beyond first resultset
                 NextStart = -1,
                 Results = new Item[]
                 {

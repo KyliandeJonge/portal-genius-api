@@ -48,6 +48,7 @@ namespace PortalGenius.UnitTests.Core.Services
             var itemResponseOne = new SearchResult<Item>
             {
                 Num = 3,
+                // Mark the next index of first entry in the next resultset
                 NextStart = 4,
 
                 Results = new Item[]
@@ -61,6 +62,7 @@ namespace PortalGenius.UnitTests.Core.Services
             var itemResponseTwo = new SearchResult<Item>
             {
                 Num = 3,
+                // Mark no new entries beyond first resultset
                 NextStart = -1,
 
                 Results = new Item[]
