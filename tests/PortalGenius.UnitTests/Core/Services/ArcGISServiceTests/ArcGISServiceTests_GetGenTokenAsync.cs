@@ -8,9 +8,9 @@ using Xunit;
 
 namespace PortalGenius.UnitTests.Core.Services
 {
-    public class ArcGISServiceTests_GetAllItemsAsync : ArcGISServiceTests
+    public class ArcGISServiceTests_GetGenTokenAsync : ArcGISServiceTests
     {
-        public ArcGISServiceTests_GetAllItemsAsync() : base()
+        public ArcGISServiceTests_GetGenTokenAsync() : base()
         {
         }
 
