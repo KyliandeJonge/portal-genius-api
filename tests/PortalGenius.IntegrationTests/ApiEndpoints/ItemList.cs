@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -33,6 +34,7 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
             // Act
             var response = await client.GetAsync("/");
+
 
             // Arrange
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -69,7 +71,7 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
         }
 
         [Fact]
-        public async Task GetAllItemDataParallel_ReturnsAtleastOneItem()
+        public async Task GetAllItemDataParallel_ReturnsAtleastOneItemData()
         {
             // Assert
             await using var application = new ApiApplication();
@@ -77,6 +79,36 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
             // Act
             var response = await client.GetAsync("/allDataParallel");
+            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
+
+            // Arrange
+            Assert.True(data.Count > 0);
+        }
+
+        [Fact]
+        public async Task GetAllItemDataSequential_IsNotNull()
+        {
+            // Assert
+            await using var application = new ApiApplication();
+            var client = application.CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/allDataSequential");
+            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
+
+            // Arrange
+            Assert.NotNull(data);
+        }
+
+        [Fact]
+        public async Task GetAllItemDataSequential_ReturnsAtleastOneItemData()
+        {
+            // Assert
+            await using var application = new ApiApplication();
+            var client = application.CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/allDataSequential");
             var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
 
             // Arrange
