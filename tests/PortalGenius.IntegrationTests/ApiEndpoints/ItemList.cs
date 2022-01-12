@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -48,10 +49,10 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
             // Act
             var response = await client.GetAsync("/");
-            var items = await ApiApplication.ParseHttpResponseToJsonAsync<SearchResult<Item>>(response);
+            var items = await ApiApplication.ParseHttpResponseToJsonAsync<List<Item>>(response);
             
             // Arrange
-            Assert.True(items.Num > 0);
+            Assert.True(items.Count() > 0);
         }
 
         [Fact]
