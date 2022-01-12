@@ -34,7 +34,7 @@ namespace PortalGenius.Core.Services
         {
             try
             {
-                await GetGenToken();
+                await GetGenTokenAsync();
                 _logger.LogTrace("New token generated");
             }
             catch (Exception e)
@@ -97,7 +97,7 @@ namespace PortalGenius.Core.Services
             }
         }
 
-        public async Task<GenerateToken> GetGenTokenWithNewCreds(string username, string password)
+        public async Task<GenerateToken> GetGenTokenWithNewCredsAsync(string username, string password)
         {
             return await GetGenTokenAsync(username, password, true); ;
         }
