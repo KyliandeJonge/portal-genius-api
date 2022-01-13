@@ -53,7 +53,7 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
 
             // Arrange
-            Assert.NotNull(this.items);
+            Assert.NotNull(result);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
 
             // Arrange
-            Assert.True(this.items.Length > 0);
+            Assert.True(result.Length > 0);
         }
 
         [Fact]
