@@ -23,8 +23,8 @@ namespace PortalGenius.IntegrationTests.Data
             // MME 12-01-2022: leesbaarheid wordt beter als je dit gewoon verdeeld over 2 regels
             // daarnaast geeft het meer mogelijkheden om defensief te programmeren
             //
-            // 13-01-2022: feedback aangenomen, maar besloten om het zo te laten (zie GitHub comment bij commit 37e00c9)
-            var newItem = (await repository.GetAllAsync()).FirstOrDefault();
+            // 13-01-2022: feedback aangenomen; tussenoplossing toegepast met extra (herbruikbare) repository methode.
+            var newItem = await repository.GetFirstOrDefaultAsync();
 
             // Arrange
             Assert.Equal(testId, newItem?.Id);

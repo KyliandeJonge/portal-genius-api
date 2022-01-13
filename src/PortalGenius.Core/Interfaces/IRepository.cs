@@ -8,6 +8,8 @@ namespace PortalGenius.Core.Interfaces
 
         public Task<IEnumerable<TEntity>> GetAllAsync();
 
+        public Task<TEntity> GetFirstOrDefaultAsync();
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
 
         public void Add(TEntity entity);

@@ -41,6 +41,11 @@ namespace PortalGenius.Infrastructure.Data
             return await _table.FindAsync(id);
         }
 
+        public async Task<TEntity> GetFirstOrDefaultAsync()
+        {
+            return await _table.FirstOrDefaultAsync();
+        }
+
         public void Remove(TEntity entity)
         {
             _table.Remove(entity);
