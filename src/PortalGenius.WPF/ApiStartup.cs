@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PortalGenius.Core.Interfaces;
+using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
+using PortalGenius.Infrastructure.HostedServices;
+using System;
 
 namespace PortalGenius.WPF
 {
@@ -26,6 +30,21 @@ namespace PortalGenius.WPF
 
             // TODO: Check if local database should be used
             services.AddDbContext<AppDbContext, SQLiteDbContext>();
+
+            // Configure the HTTP client endpoints
+            services.AddHttpClient("arcgis-api", options =>
+            {
+                options.BaseAddress = new Uri("https://portalgenius.maps.arcgis.com/sharing");
+            });
+            services.AddHttpService("arcgis-api");
+
+            services.AddTransient<IArcGISService, ArcGISService>();
+
+            // TODO: Should the Update Items Service be called upon application startup?
+            services.AddHostedService<UpdateItemsService>();
+
+            // Register all available repositories
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

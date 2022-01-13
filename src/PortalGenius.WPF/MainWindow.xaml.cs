@@ -19,12 +19,12 @@ namespace PortalGenius.WPF
     public partial class MainWindow : Window
     {
         private readonly IHost _host;
-        private readonly ArcGISService _arcGISService;
+        private readonly IArcGISService _arcGISService;
 
         private readonly IRepository<Item> _itemRepository;
 
         public MainWindow(
-            ArcGISService arcGISService, 
+            IArcGISService arcGISService, 
             IRepository<Item> itemRepository
         )
         {
@@ -48,7 +48,7 @@ namespace PortalGenius.WPF
             InitializeComponent();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
             // MME 12-01-2022: voor deze test-app kan ik er mee leven hoor dat je de OnClosing en xxx_Click methods gebruikt
             // maar als je de code van het product zou zien, dan zul je zien dat ik dit niet doe.
@@ -58,7 +58,9 @@ namespace PortalGenius.WPF
             // zonder mvvm kun je je schermen niet unit testen
 
             // Stop the Kestrel host when this window closes
+            await _host.StopAsync();
             _host.Dispose();
+
             base.OnClosing(e);
         }
 
