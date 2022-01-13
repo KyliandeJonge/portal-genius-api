@@ -1,22 +1,13 @@
-﻿using System;
+﻿using Moq.Contrib.HttpClient;
+using Newtonsoft.Json;
+using PortalGenius.Core.Models;
+using PortalGenius.UnitTests.Core.Services;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
-using Moq.Contrib.HttpClient;
-using Newtonsoft.Json;
-using PortalGenius.Core.Models;
-using PortalGenius.Infrastructure.Data;
-using PortalGenius.UnitTests.Core.Services;
 using Xunit;
 
 namespace PortalGenius.IntegrationTests.ApiEndpoints
@@ -25,9 +16,10 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
     public class ItemList : HttpServiceTests
     {
         public Item[] items;
-        public ItemList () {
+        public ItemList () 
+        {
             _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
-            .ReturnsResponse("test", "application/json");
+                .ReturnsResponse("test", "application/json");
 
             items = new Item[]
                 {
@@ -49,12 +41,11 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
                 .ReturnsResponse(content, "application/json");
 
             // Act
-            var response = await client.GetAsync("test-get-allitems");
-            var result = await _httpService.GetAsync<object>("test-get-allitems");
+            var result = await _httpService.GetAsync<Item[]>("test-get-allitems");
 
 
             // Arrange
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(this.items, result);
         }
 
         [Fact]
@@ -69,11 +60,8 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
             var items = await ApiApplication.ParseHttpResponseToJsonAsync<List<Item>>(response);
             
             // Arrange
-<<<<<<< HEAD
             Assert.True(items.Count > 0);
-=======
             Assert.True(items.Count() > 0);
->>>>>>> ad96a55a64e07e6e100664c88530f95eafee5c13
         }
 
         [Fact]
