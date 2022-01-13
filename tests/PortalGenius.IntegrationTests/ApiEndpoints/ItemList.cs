@@ -16,27 +16,35 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
     public class ItemList : HttpServiceTests
     {
         public Item[] items;
-        public ItemList () 
-        {
-            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
-                .ReturnsResponse("test", "application/json");
+        public ItemDataResult itemData;
 
+        public ItemList()
+        {
             items = new Item[]
-                {
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                    new Item { Id = Guid.NewGuid().ToString() },
-                };
-            }
+            {
+                new Item { Id = Guid.NewGuid().ToString() },
+                new Item { Id = Guid.NewGuid().ToString() },
+                new Item { Id = Guid.NewGuid().ToString() },
+            };
+
+            itemData = new ItemDataResult
+            {
+                layers = new Layer[]
+            {
+                new Layer { Id = Guid.NewGuid().ToString() },
+                new Layer { Id = Guid.NewGuid().ToString() },
+                new Layer { Id = Guid.NewGuid().ToString() },
+            }};
+        }
+
+      
 
         [Fact]
-        public async Task GetAllItems_ReturnsOKStatus()
+        public async Task GetAllItems_ShouldNotBeNull()
         {
-            // Assert
-            await using var application = new ApiApplication();
+            // Assert  
             var content = JsonConvert.SerializeObject(this.items);
 
-            var client = application.CreateClient();
             _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
                 .ReturnsResponse(content, "application/json");
 
@@ -45,83 +53,55 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
 
 
             // Arrange
-            Assert.Equal(this.items, result);
+            Assert.NotNull(this.items);
         }
 
         [Fact]
         public async Task GetAllItems_ReturnsAtleastOneItem()
         {
             // Assert
-            await using var application = new ApiApplication();
-            var client = application.CreateClient();
+            var content = JsonConvert.SerializeObject(this.items);
+
+            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
+                .ReturnsResponse(content, "application/json");
 
             // Act
-            var response = await client.GetAsync("/");
-            var items = await ApiApplication.ParseHttpResponseToJsonAsync<List<Item>>(response);
-            
+            var result = await _httpService.GetAsync<Item[]>("test-get-allitems");
+
+
             // Arrange
-            Assert.True(items.Count > 0);
-            Assert.True(items.Count() > 0);
+            Assert.True(this.items.Length > 0);
         }
 
         [Fact]
-        public async Task GetAllItemDataParallel_IsNotNull()
+        public async Task GetAllItemData_ShouldNotBeNull()
         {
+            var content = JsonConvert.SerializeObject(this.itemData);
             // Assert
-            await using var application = new ApiApplication();
-            var client = application.CreateClient();
+            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitemsparalell")
+                .ReturnsResponse(content, "application/json");
 
             // Act
-            var response = await client.GetAsync("/allDataParallel");
-            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
-           
+            var result = await _httpService.GetAsync<ItemDataResult>("test-get-allitemsparalell");
+
             // Arrange
-            Assert.NotNull(data);
+            Assert.NotNull(result);
         }
 
         [Fact]
-        public async Task GetAllItemDataParallel_ReturnsAtleastOneItemData()
+        public async Task GetAllItemData_ReturnsAtleastOneLayer()
         {
+            var content = JsonConvert.SerializeObject(this.itemData);
             // Assert
-            await using var application = new ApiApplication();
-            var client = application.CreateClient();
+            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitemsparalell")
+                .ReturnsResponse(content, "application/json");
 
             // Act
-            var response = await client.GetAsync("/allDataParallel");
-            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
+            var result = await _httpService.GetAsync<ItemDataResult>("test-get-allitemsparalell");
 
             // Arrange
-            Assert.True(data.Count > 0);
+            Assert.True(result.layers.Length > 0);
         }
 
-        [Fact]
-        public async Task GetAllItemDataSequential_IsNotNull()
-        {
-            // Assert
-            await using var application = new ApiApplication();
-            var client = application.CreateClient();
-
-            // Act
-            var response = await client.GetAsync("/allDataSequential");
-            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
-
-            // Arrange
-            Assert.NotNull(data);
-        }
-
-        [Fact]
-        public async Task GetAllItemDataSequential_ReturnsAtleastOneItemData()
-        {
-            // Assert
-            await using var application = new ApiApplication();
-            var client = application.CreateClient();
-
-            // Act
-            var response = await client.GetAsync("/allDataSequential");
-            var data = await ApiApplication.ParseHttpResponseToJsonAsync<List<object>>(response);
-
-            // Arrange
-            Assert.True(data.Count > 0);
-        }
     }
 }
