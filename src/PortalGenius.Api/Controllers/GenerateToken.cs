@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PortalGenius.Core.Services;
 
-namespace PG_API.Controllers;
+namespace PortalGenius.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]

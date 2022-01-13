@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using PortalGenius.Core.Models;
 using System.Diagnostics;
 
-namespace PG_API.Controllers;
+namespace PortalGenius.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
