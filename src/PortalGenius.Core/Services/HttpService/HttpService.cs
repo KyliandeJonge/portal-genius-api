@@ -49,10 +49,18 @@ namespace PortalGenius.Core.Services
                 // x++;
                 // wat is de uitkomst bij x = 10?
                 // wat is de uitkomst als we van x = 9 maken?
+                // 
+                // 
+
+                // 13-01-2022 MS: goed punt! feedback verwerkt
                 if (response.IsSuccessStatusCode)
+                {
                     result = await ParseHttpResponseToJsonAsync<T>(response);
+                }
                 else
+                {
                     _logger.LogWarning("[HTTP GET {statusCode}] Something went wrong while connecting with: ({apiUrl}).", response.StatusCode, apiUrl);
+                }
             }
             catch (HttpRequestException ex)
             {
@@ -78,6 +86,10 @@ namespace PortalGenius.Core.Services
 
 
             // 12-01-2022 MME: is het hier de bedoeling dat de request multi threaded worden uitgevoerd?
+            // 13-01-2022 MS: het doel achter de do/while is dat er net zolang vervolgrequests uitgevoerd totdat er geen "pagina's" zijn met bijv. items.
+            //                ArcGIS levert haar data standaard in blokken van 10 items op. Door naar de nextStart property te kijken, wordt er net 
+            //                lang een vervolgverzoek uitgevoerd totdat alle (bijv.) items geweest zijn. De reden achter een do/while is dat er ongeacht de
+            //                hoeveelheid minimaal 1x een verzoek uitgevoerd moet worden.
             do
             {
                 var nextUrl = (nextStart != -1) ? $"{apiUrl}&start={nextStart}" : apiUrl;
@@ -87,6 +99,7 @@ namespace PortalGenius.Core.Services
                     .ContinueWith(async (searchTask) =>
                     {
                         // 12-01-2022 MME: het nesten met die lambda-functies is heel cool, maar je leesbaarheid wordt een heel stuk beter als je de inhoud van continuewith naar een aparte methode verplaatst
+                        // 13-01-2022 MS: Eens, alleen vereist het omzetten naar een eigen methode wat kunst en vliegwerk met verwijzingen naar variabelen die buiten de scope van deze Lambda expressie vallen.
                         try
                         {
                             var response = await searchTask;

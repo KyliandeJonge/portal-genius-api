@@ -18,6 +18,9 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetAllUsers()
     {
         // 12-01-2022 MME: gewoon 2 regels doen
-        return Ok(await _arcGISService.GetAllUsersAsync());
+        // 13-01-2022 MS: goed punt, dit is leesbaarder zo en biedt iets meer debugmogelijkheden
+        var users = await _arcGISService.GetAllUsersAsync();
+
+        return Ok(users);
     }
 }
