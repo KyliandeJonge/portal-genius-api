@@ -39,13 +39,17 @@ namespace PortalGenius.WPF
             });
 
             services.AddHttpService("local-api");
-            services.AddTransient<ArcGISService>();
+            services.AddTransient<IArcGISService, ArcGISService>();
 
             // Register all available repositories
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             // Windows
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<APIWindow>();
+
+            // Pages
+            services.AddTransient<ShowAPIoutput>();
         }
 
         private void InitializeConfiguration(IServiceCollection services)
@@ -59,14 +63,6 @@ namespace PortalGenius.WPF
                 .Build();
 
             services.AddScoped(_ => Configuration);
-            services.AddTransient<IArcGISService, ArcGISService>();
-
-            // Windows
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<APIWindow>();
-
-            // Pages
-            services.AddTransient<ShowAPIoutput>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
