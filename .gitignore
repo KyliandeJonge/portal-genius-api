@@ -269,5 +269,5 @@ Packages.props
 # *.db
 
 # Development files
-PortalGenius.Api/appsettings.Development.json
-PortalGenius.WPF/appsettings.Development.json
+src/PortalGenius.Api/appsettings.Development.json
+src/PortalGenius.WPF/appsettings.Development.json
