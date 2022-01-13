@@ -12,28 +12,45 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
 using PortalGenius.Core.Models;
 using PortalGenius.Infrastructure.Data;
+using PortalGenius.UnitTests.Core.Services;
 using Xunit;
 
 namespace PortalGenius.IntegrationTests.ApiEndpoints
 {
     [Collection("Sequential")]
-    public class ItemList
+    public class ItemList : HttpServiceTests
     {
-        public static SearchResult<Item> items;
-        public ItemList () { }
+        public Item[] items;
+        public ItemList () {
+            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
+            .ReturnsResponse("test", "application/json");
+
+            items = new Item[]
+                {
+                    new Item { Id = Guid.NewGuid().ToString() },
+                    new Item { Id = Guid.NewGuid().ToString() },
+                    new Item { Id = Guid.NewGuid().ToString() },
+                };
+            }
 
         [Fact]
         public async Task GetAllItems_ReturnsOKStatus()
         {
             // Assert
             await using var application = new ApiApplication();
+            var content = JsonConvert.SerializeObject(this.items);
+
             var client = application.CreateClient();
+            _httpHandlerMock.SetupRequest(HttpMethod.Get, $"{ApiBaseUrl}/test-get-allitems")
+                .ReturnsResponse(content, "application/json");
 
             // Act
-            var response = await client.GetAsync("/");
+            var response = await client.GetAsync("test-get-allitems");
+            var result = await _httpService.GetAsync<object>("test-get-allitems");
 
 
             // Arrange
@@ -52,7 +69,11 @@ namespace PortalGenius.IntegrationTests.ApiEndpoints
             var items = await ApiApplication.ParseHttpResponseToJsonAsync<List<Item>>(response);
             
             // Arrange
+<<<<<<< HEAD
+            Assert.True(items.Count > 0);
+=======
             Assert.True(items.Count() > 0);
+>>>>>>> ad96a55a64e07e6e100664c88530f95eafee5c13
         }
 
         [Fact]

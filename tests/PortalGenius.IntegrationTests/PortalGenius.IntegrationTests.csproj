@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PortalGenius.Api\PortalGenius.Api.csproj" />
+    <ProjectReference Include="..\PortalGenius.UnitTests\PortalGenius.UnitTests.csproj" />
   </ItemGroup>
 
 </Project>
