@@ -1,4 +1,6 @@
-﻿namespace PortalGenius.Core.Services
+﻿using System.Collections.Concurrent;
+
+namespace PortalGenius.Core.Services
 {
     public interface IHttpService
     {
@@ -21,7 +23,7 @@
         /// <typeparam name="T">The type to which the JSON response should be deserialized to.</typeparam>
         /// <param name="path">The path (without base address) to call.</param>
         /// <returns>The deserialized response on status OK.</returns>
-        public Task<List<T>> GetSearchResultsAsync<T>(string path) where T : class;
+        public Task<ConcurrentBag<T>> GetSearchResultsAsync<T>(string path) where T : class;
 
         /// <summary>
         ///     Exectute a POST request and parse the JSON response to <typeparamref name="T"/> when the response is valid.

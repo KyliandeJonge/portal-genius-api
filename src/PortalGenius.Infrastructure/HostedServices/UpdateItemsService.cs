@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
+using Dasync.Collections;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -73,13 +76,28 @@ namespace PortalGenius.Infrastructure.HostedServices
 
                 // Bulk insert the latest items.
                 _logger.LogWarning("Updating database data");
-                repo.AddRange(items);
-
+                
+                await items.ParallelForEachAsync(async item=>
+                {
+                    repo.Add(item);
+                });
+             
                 // Mutate the changes
                 await repo.SaveChangesAsync();
             }
 
             _logger.LogInformation("{count} item(s) inserted into the database", items.Count());
+        }
+
+        private async Task AddMultithreaded(ConcurrentBag<Item> items, IRepository<Item> repository)
+        { 
+            
+
+            // welke is beter?
+            /*await Parallel.ForEachAsync(items, async (item, token) =>
+            {
+                repository.Add(item);
+            });*/
         }
     }
 }
