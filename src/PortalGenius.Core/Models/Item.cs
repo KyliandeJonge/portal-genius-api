@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PortalGenius.Core.Models
 {
@@ -6,6 +7,10 @@ namespace PortalGenius.Core.Models
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
+
+        [NotMapped]
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
         [JsonPropertyName("owner")]
         public string Owner { get; set; }
