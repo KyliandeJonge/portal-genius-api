@@ -73,7 +73,6 @@ namespace PortalGenius.WPF
         /// <param name="e"></param>
         private async void btnGetItemsAndInsertInDatabase_Click(object sender, RoutedEventArgs e)
         {
-            
             var items = await _arcGISService.GetAllItemsAsync();
             
             _itemRepository.AddRange(items);
@@ -96,9 +95,8 @@ namespace PortalGenius.WPF
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
-            {
-                dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
-            }
+        {
+            dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
         }
 
         private void Opslaan_Click(object sender, RoutedEventArgs e)
