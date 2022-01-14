@@ -1,10 +1,11 @@
-﻿using PortalGenius.Core.Models;
+﻿using System.Collections.Concurrent;
+using PortalGenius.Core.Models;
 
 namespace PortalGenius.Core.Services
 {
     public interface IArcGISService
     {
-        public Task<List<Item>> GetAllItemsAsync();
+        public Task<ConcurrentBag<Item>> GetAllItemsAsync();
 
         public Task<object> GetDataFromItemAsync(string item_id);
 

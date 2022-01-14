@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PortalGenius.Core.Models;
@@ -75,15 +76,13 @@ namespace PortalGenius.Core.Services
             return result;
         }
 
-        public async Task<List<T>> GetSearchResultsAsync<T>(string path) where T : class
+        public async Task<ConcurrentBag<T>> GetSearchResultsAsync<T>(string path) where T : class
         {
             // Het resultaat is standaard een lege lijst van het type T.
-
-            var result = new List<T>();
+            var result = new ConcurrentBag<T>();
 
             var apiUrl = GenerateRequestUrl(path);
             var nextStart = -1;
-
 
             // 12-01-2022 MME: is het hier de bedoeling dat de request multi threaded worden uitgevoerd?
             // 13-01-2022 MS: het doel achter de do/while is dat er net zolang vervolgrequests uitgevoerd totdat er geen "pagina's" zijn met bijv. items.
@@ -111,7 +110,12 @@ namespace PortalGenius.Core.Services
                                 {
                                     // Build the full list to return later after the loop.
                                     if (searchResult.Results.Any())
-                                        result.AddRange(searchResult.Results);
+                                    {
+                                        foreach (T resultResult in searchResult.Results)
+                                        {
+                                            result.Add(resultResult);
+                                        }
+                                    }
 
                                     // Get the URL for the next page
                                     nextStart = searchResult.NextStart;

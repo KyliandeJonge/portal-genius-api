@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
+using Dasync.Collections;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -73,7 +76,13 @@ namespace PortalGenius.Infrastructure.HostedServices
 
                 // Bulk insert the latest items.
                 _logger.LogWarning("Updating database data");
-                repo.AddRange(items);
+
+                await items.ParallelForEachAsync(item =>
+                {
+                    repo.Add(item);
+
+                    return Task.CompletedTask;
+                });
 
                 // Mutate the changes
                 await repo.SaveChangesAsync();
