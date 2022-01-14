@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Win32;
 using PortalGenius.Core.Interfaces;
 using PortalGenius.Core.Models;
 using PortalGenius.Core.Services;
 using PortalGenius.Infrastructure.Data;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -84,6 +86,16 @@ namespace PortalGenius.WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
+        }
+
+        private void Opslaan_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+               //string ID = dgMainDg.SelectedItems[0];
+            }
         }
     }
 }
