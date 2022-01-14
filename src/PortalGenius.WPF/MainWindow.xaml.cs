@@ -73,17 +73,29 @@ namespace PortalGenius.WPF
         {
             
             var items = await _arcGISService.GetAllItemsAsync();
-
+            
             _itemRepository.AddRange(items);
             await _itemRepository.SaveChangesAsync();
+            
             dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
 
             btnGetItemsAndInsertInDatabase.IsEnabled = false;
+            btnClearDatabase.IsEnabled = true;
+        }
+
+        private async void btnClearDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            _itemRepository.RemoveRange(await _itemRepository.GetAllAsync());
+            await _itemRepository.SaveChangesAsync();
+            dgMainDg.ItemsSource = null;
+
+            btnGetItemsAndInsertInDatabase.IsEnabled = true;
+            btnClearDatabase.IsEnabled = false;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
+            {
+                dgMainDg.ItemsSource = await _itemRepository.GetAllAsync();
+            }
         }
-    }
 }
