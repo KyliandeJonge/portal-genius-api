@@ -79,9 +79,8 @@ namespace PortalGenius.Core.Services
         public async Task<ConcurrentBag<T>> GetSearchResultsAsync<T>(string path) where T : class
         {
             // Het resultaat is standaard een lege lijst van het type T.
+            var result = new ConcurrentBag<T>();
 
-            ConcurrentBag<T> result = new ConcurrentBag<T>();
-            //var result = new List<T>();
             var apiUrl = GenerateRequestUrl(path);
             var nextStart = -1;
 
@@ -111,10 +110,12 @@ namespace PortalGenius.Core.Services
                                 {
                                     // Build the full list to return later after the loop.
                                     if (searchResult.Results.Any())
+                                    {
                                         foreach (T resultResult in searchResult.Results)
                                         {
                                             result.Add(resultResult);
                                         }
+                                    }
 
                                     // Get the URL for the next page
                                     nextStart = searchResult.NextStart;

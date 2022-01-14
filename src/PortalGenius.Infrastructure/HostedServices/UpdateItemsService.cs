@@ -76,28 +76,19 @@ namespace PortalGenius.Infrastructure.HostedServices
 
                 // Bulk insert the latest items.
                 _logger.LogWarning("Updating database data");
-                
-                await items.ParallelForEachAsync(async item=>
+
+                await items.ParallelForEachAsync(item =>
                 {
                     repo.Add(item);
+
+                    return Task.CompletedTask;
                 });
-             
+
                 // Mutate the changes
                 await repo.SaveChangesAsync();
             }
 
             _logger.LogInformation("{count} item(s) inserted into the database", items.Count());
-        }
-
-        private async Task AddMultithreaded(ConcurrentBag<Item> items, IRepository<Item> repository)
-        { 
-            
-
-            // welke is beter?
-            /*await Parallel.ForEachAsync(items, async (item, token) =>
-            {
-                repository.Add(item);
-            });*/
         }
     }
 }
