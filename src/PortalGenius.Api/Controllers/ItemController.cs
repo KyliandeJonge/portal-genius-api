@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using PortalGenius.Core.Models;
 using System.Diagnostics;
 using System.Collections.Concurrent;
+using PortalGenius.Core.Interfaces;
 
 namespace PortalGenius.Api.Controllers;
 
@@ -13,16 +14,19 @@ namespace PortalGenius.Api.Controllers;
 public class ItemController : ControllerBase
 {
     private readonly IArcGISService _argGISService;
+    private readonly IRepository<Item> _itemRepository;
 
-    public ItemController(IArcGISService arcGISService)
+    public ItemController(IArcGISService arcGISService, IRepository<Item> itemRepository)
     {
         _argGISService = arcGISService;
+        _itemRepository = itemRepository;
     }
 
     [HttpGet("/")]
     public async Task<IActionResult> GetAllItems()
     {
-        return Ok(await _argGISService.GetAllItemsAsync());
+
+        return Ok(await _itemRepository.GetAllAsync());
     }
 
     [HttpGet("/allDataParallel")]
@@ -82,7 +86,7 @@ public class ItemController : ControllerBase
         // overal locks in de code gebruiken is geen oplossing want dan kun je waarschijnlijk beter geen threading gebruiken
         // https://chrisstclair.co.uk/multithreading-made-easy-parallel-foreach/
         var result = new ConcurrentBag<string>();
-        var items = await _argGISService.GetAllItemsAsync();
+        var items = await _itemRepository.GetAllAsync();
         // 12-01-2022 MME: het task parallel framework maakt indien nodig inderdaad gebruik van de threadpool
         Parallel.ForEach(items, item =>
         {
