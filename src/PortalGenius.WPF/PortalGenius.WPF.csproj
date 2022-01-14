@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<UseWPF>true</UseWPF>
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
 
-		<!-- When OutputType is set to WinExe, a console window doesn't open when the app is executed. -->
-		<OutputType>WinExe</OutputType>
+        <!-- When OutputType is set to WinExe, a console window doesn't open when the app is executed. -->
+        <OutputType>WinExe</OutputType>
     </PropertyGroup>
 
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<OutputType>Exe</OutputType>
-		<DisableWinExeOutputInference>true</DisableWinExeOutputInference>
-	</PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <OutputType>Exe</OutputType>
+        <DisableWinExeOutputInference>true</DisableWinExeOutputInference>
+    </PropertyGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <!-- Copy (updated) images to the build folder -->
-		<Content Include="Assets\Images\*.*">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
+        <Content Include="Assets\Images\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
 
         <!-- Copy appsettings -->
         <Content Include="appsettings.json">
@@ -27,34 +27,34 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <DependentUpon>appsettings.json</DependentUpon>
         </Content>
-	</ItemGroup>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="appsettings.Development.json" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Remove="appsettings.Development.json" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="JSONTreeView" Version="1.1.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="JSONTreeView" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
-	  <ProjectReference Include="..\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\PortalGenius.Core\PortalGenius.Core.csproj" />
+        <ProjectReference Include="..\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj" />
+    </ItemGroup>
 </Project>

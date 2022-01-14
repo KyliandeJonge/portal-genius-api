@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="PortalGenius ArcGIS data" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        >
+        Title="PortalGenius ArcGIS data" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Image">
             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
@@ -25,8 +24,10 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" Source="./Assets/Images/portalgenius.png" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" />
-            <Image Grid.Column="1" Grid.Row="0" Source="./Assets/Images/windesheim.png"  VerticalAlignment="Center" HorizontalAlignment="Right" Width="100"/>
+            <Image Grid.Column="0" Source="./Assets/Images/portalgenius.png" VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Width="100" />
+            <Image Grid.Column="1" Grid.Row="0" Source="./Assets/Images/windesheim.png" VerticalAlignment="Center"
+                   HorizontalAlignment="Right" Width="100" />
         </Grid>
 
         <Grid Grid.Row="1">
@@ -36,34 +37,30 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
-                <Button 
-                    x:Name="btnGetItemsAndInsertInDatabase" 
-                    Content="Insert Items In Database"  
-                    HorizontalAlignment="Stretch" 
-                    Click="btnGetItemsAndInsertInDatabase_Click" 
-                    Margin="0,0,0,10" 
-                />
+                <Button
+                    x:Name="btnGetItemsAndInsertInDatabase"
+                    Content="Insert Items In Database"
+                    HorizontalAlignment="Stretch"
+                    Click="btnGetItemsAndInsertInDatabase_Click"
+                    Margin="0,0,0,10" />
 
-                <Button 
-                    Content="Opslaan" 
-                    HorizontalAlignment="Stretch" 
-                    Click="Opslaan_Click" 
-                    Margin="0,0,0,10" 
-                />
+                <Button
+                    Content="Opslaan"
+                    HorizontalAlignment="Stretch"
+                    Click="Opslaan_Click"
+                    Margin="0,0,0,10" />
 
-                <Button 
-                    x:Name="btnClearDatabase" 
-                    Content="Clear Database" 
-                    HorizontalAlignment="Stretch" 
-                    Click="btnClearDatabase_Click"
-                />
+                <Button
+                    x:Name="btnClearDatabase"
+                    Content="Clear Database"
+                    HorizontalAlignment="Stretch"
+                    Click="btnClearDatabase_Click" />
             </StackPanel>
 
             <ScrollViewer Grid.Column="1" Background="Transparent">
-                <DataGrid x:Name="dgMainDg" 
-                    d:ItemsSource="{d:SampleData ItemCount=10}" 
-                    Margin="10,0,0,0" 
-            />
+                <DataGrid x:Name="dgMainDg"
+                          d:ItemsSource="{d:SampleData ItemCount=10}"
+                          Margin="10,0,0,0" />
             </ScrollViewer>
         </Grid>
     </Grid>

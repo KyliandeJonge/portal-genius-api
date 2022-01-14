@@ -1,35 +1,34 @@
-﻿using PortalGenius.Core.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using PortalGenius.Core.Models;
 using Xunit;
 
-namespace PortalGenius.IntegrationTests.Data
+namespace PortalGenius.IntegrationTests.Data;
+
+public class Repository_Remove : BaseEfRepoTestFixture
 {
-    public class Repository_Remove : BaseEfRepoTestFixture
+    [Fact]
+    public async Task Remove_ReturnsAllItemsExceptRemoved()
     {
-        [Fact]
-        public async Task Remove_ReturnsAllItemsExceptRemoved()
+        // Assert
+        var repository = GetRepository();
+
+        var itemToRemove = new Item { Id = "remove" };
+        var items = new[]
         {
-            // Assert
-            var repository = GetRepository();
+            new() { Id = Guid.NewGuid().ToString() },
+            itemToRemove
+        };
 
-            var itemToRemove = new Item { Id = "remove" };
-            var items = new Item[]
-            {
-                new Item { Id = Guid.NewGuid().ToString() },
-                itemToRemove
-            };
+        repository.AddRange(items);
+        await repository.SaveChangesAsync();
 
-            repository.AddRange(items);
-            await repository.SaveChangesAsync();
+        // Act & Arrange
+        Assert.Contains(await repository.GetAllAsync(), item => item.Id == itemToRemove.Id);
 
-            // Act & Arrange
-            Assert.Contains(await repository.GetAllAsync(), item => item.Id == itemToRemove.Id);
+        repository.Remove(itemToRemove);
+        await repository.SaveChangesAsync();
 
-            repository.Remove(itemToRemove);
-            await repository.SaveChangesAsync();
-
-            Assert.DoesNotContain(await repository.GetAllAsync(), item => item.Id == itemToRemove.Id);
-        }
+        Assert.DoesNotContain(await repository.GetAllAsync(), item => item.Id == itemToRemove.Id);
     }
 }

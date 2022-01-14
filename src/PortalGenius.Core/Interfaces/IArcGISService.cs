@@ -1,18 +1,17 @@
 ﻿using System.Collections.Concurrent;
 using PortalGenius.Core.Models;
 
-namespace PortalGenius.Core.Services
+namespace PortalGenius.Core.Services;
+
+public interface IArcGISService
 {
-    public interface IArcGISService
-    {
-        public Task<ConcurrentBag<Item>> GetAllItemsAsync();
+    public Task<ConcurrentBag<Item>> GetAllItemsAsync();
 
-        public Task<object> GetDataFromItemAsync(string item_id);
+    public Task<object> GetDataFromItemAsync(string item_id);
 
-        public Task<object> GetAllUsersAsync();
+    public Task<object> GetAllUsersAsync();
 
-        public Task<GenerateToken> GetGenTokenAsync(string username = "", string password = "", bool newCreds = false);
+    public Task<GenerateToken> GetGenTokenAsync(string username = "", string password = "", bool newCreds = false);
 
-        public Task<GenerateToken> GetGenTokenWithNewCredsAsync(string username, string password);
-    }
+    public Task<GenerateToken> GetGenTokenWithNewCredsAsync(string username, string password);
 }

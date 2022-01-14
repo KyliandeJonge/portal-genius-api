@@ -14,7 +14,7 @@ public class UserController : ControllerBase
         _arcGISService = arcGISService;
     }
 
-    [HttpPost()]
+    [HttpPost]
     public async Task<IActionResult> GetAllUsers()
     {
         // 12-01-2022 MME: gewoon 2 regels doen
