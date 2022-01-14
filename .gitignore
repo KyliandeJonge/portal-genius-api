@@ -267,3 +267,7 @@ Packages.props
 
 # SQLite
 # *.db
+
+# Development files
+src/PortalGenius.Api/appsettings.Development.json
+src/PortalGenius.WPF/appsettings.Development.json

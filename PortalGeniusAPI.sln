@@ -3,18 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PG_API", "PG_API\PG_API.csproj", "{5B3795DB-777B-48F5-B9A1-692EAD3E19B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.Api", "src\PortalGenius.Api\PortalGenius.Api.csproj", "{5B3795DB-777B-48F5-B9A1-692EAD3E19B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "Test_Console\Test_Console.csproj", "{C919DE44-D88D-40E9-9258-B0E285C39F83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "src\Test_Console\Test_Console.csproj", "{C919DE44-D88D-40E9-9258-B0E285C39F83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_PG_API", "Test_PG_API\Test_PG_API.csproj", "{9A3D8D8B-AA4A-428D-A7C8-E2D8EA227F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.WPF", "src\PortalGenius.WPF\PortalGenius.WPF.csproj", "{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.WPF", "PortalGenius.WPF\PortalGenius.WPF.csproj", "{D1DDC7A7-1A38-4B5E-B37B-FB100505B194}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{0204CA72-5BAE-4A82-838B-36EDC4A9F338}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B02702B6-3C00-4BA9-A290-017E695EDC6E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		ContextCommandos.txt = ContextCommandos.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.Core", "src\PortalGenius.Core\PortalGenius.Core.csproj", "{1C15D53F-7A99-43C4-9E9B-706825272189}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.Infrastructure", "src\PortalGenius.Infrastructure\PortalGenius.Infrastructure.csproj", "{6FE37FCC-0963-404A-872D-56F9DC879A2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalGenius.UnitTests", "tests\PortalGenius.UnitTests\PortalGenius.UnitTests.csproj", "{4A6C7653-6DE4-476D-9E85-BA01B384A3AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DAC580E5-CC28-4A2C-BA16-828DCC8A1653}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DCFCC2E-E5AF-4ABB-B581-647E0A8B308B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalGenius.IntegrationTests", "tests\PortalGenius.IntegrationTests\PortalGenius.IntegrationTests.csproj", "{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,19 +42,40 @@ Global
 		{C919DE44-D88D-40E9-9258-B0E285C39F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C919DE44-D88D-40E9-9258-B0E285C39F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C919DE44-D88D-40E9-9258-B0E285C39F83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A3D8D8B-AA4A-428D-A7C8-E2D8EA227F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A3D8D8B-AA4A-428D-A7C8-E2D8EA227F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A3D8D8B-AA4A-428D-A7C8-E2D8EA227F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A3D8D8B-AA4A-428D-A7C8-E2D8EA227F5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1DDC7A7-1A38-4B5E-B37B-FB100505B194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1DDC7A7-1A38-4B5E-B37B-FB100505B194}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1DDC7A7-1A38-4B5E-B37B-FB100505B194}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1DDC7A7-1A38-4B5E-B37B-FB100505B194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C15D53F-7A99-43C4-9E9B-706825272189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C15D53F-7A99-43C4-9E9B-706825272189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C15D53F-7A99-43C4-9E9B-706825272189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C15D53F-7A99-43C4-9E9B-706825272189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE37FCC-0963-404A-872D-56F9DC879A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE37FCC-0963-404A-872D-56F9DC879A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE37FCC-0963-404A-872D-56F9DC879A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE37FCC-0963-404A-872D-56F9DC879A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6C7653-6DE4-476D-9E85-BA01B384A3AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6C7653-6DE4-476D-9E85-BA01B384A3AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6C7653-6DE4-476D-9E85-BA01B384A3AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6C7653-6DE4-476D-9E85-BA01B384A3AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B3795DB-777B-48F5-B9A1-692EAD3E19B4} = {DAC580E5-CC28-4A2C-BA16-828DCC8A1653}
+		{C919DE44-D88D-40E9-9258-B0E285C39F83} = {DAC580E5-CC28-4A2C-BA16-828DCC8A1653}
+		{BD61EF2D-F4E3-4A24-8A07-2EFDE570A031} = {DAC580E5-CC28-4A2C-BA16-828DCC8A1653}
+		{1C15D53F-7A99-43C4-9E9B-706825272189} = {DAC580E5-CC28-4A2C-BA16-828DCC8A1653}
+		{6FE37FCC-0963-404A-872D-56F9DC879A2B} = {DAC580E5-CC28-4A2C-BA16-828DCC8A1653}
+		{4A6C7653-6DE4-476D-9E85-BA01B384A3AC} = {8DCFCC2E-E5AF-4ABB-B581-647E0A8B308B}
+		{BDB432C8-9495-4BF8-B0D6-C1870D4BCCD8} = {8DCFCC2E-E5AF-4ABB-B581-647E0A8B308B}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E52DD3DC-D962-450A-AEF8-A7E260D4E424}
+		SolutionGuid = {2495263C-304C-474F-A724-77D358CFC7E0}
 	EndGlobalSection
 EndGlobal
