@@ -1,5 +1,6 @@
-
-name: .NET
+jobs:
+  build:
+    name: .NET
 
 on:
   push:
