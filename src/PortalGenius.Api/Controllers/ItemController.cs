@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PortalGenius.Core.Services;
-using Dasync.Collections;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using PortalGenius.Core.Models;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Collections.Concurrent;
+using Dasync.Collections;
+using Microsoft.AspNetCore.Mvc;
 using PortalGenius.Core.Interfaces;
+using PortalGenius.Core.Models;
+using PortalGenius.Core.Services;
 
 namespace PortalGenius.Api.Controllers;
 
@@ -25,7 +24,6 @@ public class ItemController : ControllerBase
     [HttpGet("/")]
     public async Task<IActionResult> GetAllItems()
     {
-
         return Ok(await _itemRepository.GetAllAsync());
     }
 
@@ -33,7 +31,7 @@ public class ItemController : ControllerBase
     public async Task<ConcurrentBag<object>> GetDataFromItems()
     {
         var result = new ConcurrentBag<object>();
-        ConcurrentBag<string> items = await GetItemIds();
+        var items = await GetItemIds();
 
         var stopwatch = Stopwatch.StartNew();
 
@@ -41,14 +39,14 @@ public class ItemController : ControllerBase
         await items.ParallelForEachAsync(async item =>
         {
             var response = await _argGISService.GetDataFromItemAsync(item);
-                //Console.WriteLine(response);
-                result.Add(response);
-
-        }, maxDegreeOfParallelism: 10);
+            //Console.WriteLine(response);
+            result.Add(response);
+        }, 10);
 
         stopwatch.Stop();
         var time = stopwatch.ElapsedMilliseconds;
-        Console.WriteLine("#################################\nTijd: " + time + " ms\n#################################");
+        Console.WriteLine("#################################\nTijd: " + time +
+                          " ms\n#################################");
         stopwatch.Reset();
 
         return result;
@@ -58,7 +56,7 @@ public class ItemController : ControllerBase
     public async Task<ConcurrentBag<object>> GetDataFromItemsSequential()
     {
         var result = new ConcurrentBag<object>();
-        ConcurrentBag<string> items = await GetItemIds();
+        var items = await GetItemIds();
 
         var stopwatch = Stopwatch.StartNew();
 
@@ -68,9 +66,11 @@ public class ItemController : ControllerBase
             //Console.WriteLine(response);
             result.Add(response);
         }
+
         stopwatch.Stop();
         var time = stopwatch.ElapsedMilliseconds;
-        Console.WriteLine("#################################\nTijd: " + time + " ms\n#################################");
+        Console.WriteLine("#################################\nTijd: " + time +
+                          " ms\n#################################");
         stopwatch.Reset();
 
 
@@ -88,10 +88,7 @@ public class ItemController : ControllerBase
         var result = new ConcurrentBag<string>();
         var items = await _itemRepository.GetAllAsync();
         // 12-01-2022 MME: het task parallel framework maakt indien nodig inderdaad gebruik van de threadpool
-        Parallel.ForEach(items, item =>
-        {
-            result.Add(item.Id);
-        });
+        Parallel.ForEach(items, item => { result.Add(item.Id); });
         return result;
     }
 
@@ -101,4 +98,3 @@ public class ItemController : ControllerBase
         return Ok(await _argGISService.GetDataFromItemAsync(item_id));
     }
 }
-

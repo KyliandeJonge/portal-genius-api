@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
 
 namespace PortalGenius.Api.Controllers;
 
@@ -7,7 +6,7 @@ namespace PortalGenius.Api.Controllers;
 [ApiController]
 public class GroupController : ControllerBase
 {
-    [HttpPost()]
+    [HttpPost]
     public string Post()
     {
         throw new NotImplementedException();

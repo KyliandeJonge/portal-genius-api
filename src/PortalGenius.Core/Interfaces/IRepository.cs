@@ -1,25 +1,24 @@
 ﻿using System.Linq.Expressions;
 
-namespace PortalGenius.Core.Interfaces
+namespace PortalGenius.Core.Interfaces;
+
+public interface IRepository<TEntity> where TEntity : class
 {
-    public interface IRepository<TEntity> where TEntity : class 
-    {
-        public Task<TEntity> GetByIdAsync(string id);
+    public Task<TEntity> GetByIdAsync(string id);
 
-        public Task<IEnumerable<TEntity>> GetAllAsync();
+    public Task<IEnumerable<TEntity>> GetAllAsync();
 
-        public Task<TEntity> GetFirstOrDefaultAsync();
+    public Task<TEntity> GetFirstOrDefaultAsync();
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
+    public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
 
-        public void Add(TEntity entity);
+    public void Add(TEntity entity);
 
-        public void AddRange(IEnumerable<TEntity> entities);
+    public void AddRange(IEnumerable<TEntity> entities);
 
-        public void Remove(TEntity entity);
+    public void Remove(TEntity entity);
 
-        public void RemoveRange(IEnumerable<TEntity> entities);
+    public void RemoveRange(IEnumerable<TEntity> entities);
 
-        public Task<int> SaveChangesAsync();
-    }
+    public Task<int> SaveChangesAsync();
 }
