@@ -79,15 +79,9 @@ public class ItemController : ControllerBase
 
     private async Task<ConcurrentBag<string>> GetItemIds()
     {
-        // 12-01-2022 MME: je zal in de documentatie moeten duiken maar List is niet thread safe!
-        // oftewel als 2 threads 10 items in de lijst wegschrijven is er met List<T> geen enkele garantie dat je uiteindelijk 20 items in je lijst hebt!
-        // ConcurrentBag is volgens mij een alternatief, die wordt in Portal Genius gebruikt
-        // https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentbag-1?view=netframework-4.7.2
-        // overal locks in de code gebruiken is geen oplossing want dan kun je waarschijnlijk beter geen threading gebruiken
-        // https://chrisstclair.co.uk/multithreading-made-easy-parallel-foreach/
         var result = new ConcurrentBag<string>();
         var items = await _itemRepository.GetAllAsync();
-        // 12-01-2022 MME: het task parallel framework maakt indien nodig inderdaad gebruik van de threadpool
+
         Parallel.ForEach(items, item =>
         {
             result.Add(item.Id);

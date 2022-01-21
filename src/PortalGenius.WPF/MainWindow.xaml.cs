@@ -56,13 +56,6 @@ namespace PortalGenius.WPF
 
         protected override async void OnClosing(CancelEventArgs e)
         {
-            // MME 12-01-2022: voor deze test-app kan ik er mee leven hoor dat je de OnClosing en xxx_Click methods gebruikt
-            // maar als je de code van het product zou zien, dan zul je zien dat ik dit niet doe.
-            // voor user interfaces niet alleen wpf maar ook web dien je het mvvm-pattern te volgen (mvvm is voor wpf-applicatie, mvc voor web)
-            // ik gebruik MVVMLightLibs voor vooral de messaging binnen MVVM
-            // en ik gebruik MvvmCross voor de rest van het MVVM-pattern
-            // zonder mvvm kun je je schermen niet unit testen
-
             // Stop the Kestrel host when this window closes
             await _host.StopAsync();
             _host.Dispose();

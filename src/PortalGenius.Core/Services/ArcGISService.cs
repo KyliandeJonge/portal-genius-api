@@ -89,10 +89,6 @@ namespace PortalGenius.Core.Services
                 Encoding.UTF8, "application/x-www-form-urlencoded"));
             //fixed, kan niet controlleren op 404 omdat arcgis ook een 200 teruggeeft als het niet helemaal lukt
 
-            // 12-01-2022 MME: test voor de tekst "null"?
-            // string.isnullorempty(token.Token) en als de token geen waarde heeft dan geef je string.empty terug, je geeft vanuit de API nooit een tekst 'null' terug
-            // eigenlijk moet je je afvragen als de token er niet is of je ipv http 200 niet een http 404 moet terug geven, je doet een postasync en dan kun je ook de http code uitlezen
-            // is die http code niet 200 dan stop je dus
             if (!string.IsNullOrEmpty(token.Token))
             {
                 UserData.genToken = token.Token;
