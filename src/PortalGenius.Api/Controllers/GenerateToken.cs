@@ -24,18 +24,6 @@ public class GenerateToken : Controller
     public async Task<IActionResult> SetNewCreds(string username, string password)
     {
         var obj = await _arcGisService.GetGenTokenWithNewCredsAsync(username, password);
-        try
-        {
-            if (obj.Token.Equals("null"))
-            {
-                return Problem("could not set new username/password");
-            }
-        }
-        // 12-01-2022 MME: zie eerder opmerking, geen teksten terug geven met "null" en ook geen try-catch voor nullreference exceptions
-        catch (NullReferenceException)
-        {
-            return Problem("could not set new username/password");
-        }
-        return Ok(obj);
+        return !string.IsNullOrEmpty(obj.Token) ? Ok(obj) : Problem("could not set new username/password");
     }
 }
